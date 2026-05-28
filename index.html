@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odair Silva GPS | Garmin e Eseek</title>
+    <meta name="description" content="Instalação remota de mapas de satélite para GPS Garmin (Alpha, Astro) e eSEEk. Simulador de cobertura, desbloqueio BirdsEye. Especialistas em controle de javali.">
+    <meta name="keywords" content="mapas para caça, GPS Garmin Alpha, Astro, eSEEk, odairsilvagps, ativar mapa garmin, javali, BirdsEye, ativar birdseye, basecamp, imagens de satélite para gps, traduzir gps para portugues, idioma garmin, portugues.gtt, como baixar mapa para gps, comprar assinatura garmin, serviço de instalação de mapa de satélite para caça, melhor mapa para gps eseek, mapa de satelite de alta definição para gps, mapa de imagem de satélite para gps garmin, mapa topográfico para gps, mapa de cidade para gps, gps eseek mapa, baixar mapa para gps eseek">
+    <meta name="author" content="Odair Silva GPS">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Mapas para Caçadores – GPS Garmin e Eseek | Odair Silva GPS">
+    <meta property="og:description" content="Instalação remota de mapas de satélite para GPS Garmin e Eseek. Simule sua área de caça.">
+    <meta property="og:image" content="https://i.imgur.com/QMO8U0U.png">
+    <link rel="icon" type="image/png" href="https://i.imgur.com/QMO8U0U.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Odair Silva GPS",
+        "description": "Instalação remota de mapas para GPS Garmin e Eseek.",
+        "telephone": "+55 91 98174-3266",
+        "email": "odairdrx@gmail.com",
+        "image": "https://i.imgur.com/QMO8U0U.png"
+    }
+    </script>
+    <style>
+        :root {
+            --primary: #2e4a1f;
+            --accent: #c47a2b;
+            --dark: #1e1e1a;
+            --bg-light: #f5efe0;
+            --white: #ffffff;
+            --radius: 10px;
+            --shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; background: #1c1c16; color: #ddd; line-height: 1.7; }
+        h1, h2, h3 { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
+        h2 { font-size: 2.2rem; margin-bottom: 1rem; text-align: center; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+        header {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);
+            z-index: 1000; border-bottom: 2px solid var(--accent); padding: 0.6rem 0;
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; position: relative; }
+        .logo { display: flex; align-items: center; gap: 0.8rem; font-family: 'Oswald', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--accent); text-transform: uppercase; }
+        .logo img { height: 45px; width: auto; border-radius: 6px; }
+        nav ul { display: flex; gap: 2rem; list-style: none; }
+        nav a { font-weight: 700; font-size: 0.95rem; color: #ccc; transition: color 0.2s; }
+        nav a:hover { color: var(--accent); }
+        .menu-mobile { display: none; background: none; border: none; color: var(--accent); font-size: 2rem; cursor: pointer; }
+
+        section { padding: 5rem 0; }
+        .section-title { text-align: center; margin-bottom: 3rem; }
+        .section-title p { color: #aaa; max-width: 600px; margin: 0 auto; }
+
+        #hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&auto=format&fit=crop&q=80') center/cover no-repeat;
+            color: white; padding: 10rem 0 6rem; text-align: center; border-bottom: 4px solid var(--accent);
+        }
+        #hero h1 { font-size: 3rem; color: var(--accent); line-height: 1.2; margin-bottom: 1rem; text-shadow: 2px 2px 4px black; }
+        #hero h1 span { color: white; }
+        #hero p { font-size: 1.3rem; margin-bottom: 2rem; max-width: 650px; margin-left: auto; margin-right: auto; }
+        .btn { display: inline-block; padding: 1rem 2.2rem; border-radius: 4px; font-weight: 700; font-family: 'Oswald', sans-serif; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; cursor: pointer; }
+        .btn-primary { background: var(--accent); color: #1e1e1a; box-shadow: 0 4px 15px rgba(196,122,43,0.5); }
+        .btn-primary:hover { background: #a5621e; transform: translateY(-2px); }
+        .btn-outline { border: 2px solid var(--accent); color: var(--accent); margin-left: 1rem; background: transparent; }
+        .btn-outline:hover { background: var(--accent); color: #1e1e1a; }
+
+        #servicos { background: var(--dark); }
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .card { background: #2a2a22; border-radius: var(--radius); padding: 2rem 1.5rem; box-shadow: var(--shadow); text-align: center; border: 1px solid #444; transition: 0.2s; color: #ddd; }
+        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .card-icon { width: 70px; height: 70px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.8rem; color: #1e1e1a; }
+        .card h3 { color: var(--accent); margin-bottom: 0.8rem; }
+
+        #dispositivos { background: #222; padding: 4rem 0; }
+        .device-grid { display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-top: 2rem; }
+        .device-item { background: #2a2a22; border: 1px solid #444; border-radius: var(--radius); padding: 1.2rem 1.5rem; min-width: 140px; text-align: center; }
+        .device-item i { font-size: 2rem; color: var(--accent); }
+
+        #simulador { background: var(--bg-light); color: #2e2e2e; }
+        #simulador h2, #simulador label { color: var(--primary); }
+        .simulator-container { display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start; }
+        .simulator-form { flex: 1 1 300px; background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+        .simulator-form label { font-weight: 700; display: block; margin: 0.8rem 0 0.3rem; }
+        .simulator-form input, .simulator-form select { width: 100%; padding: 0.7rem; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; }
+        .simulator-form .btn { margin-top: 1.5rem; width: 100%; background: var(--primary); color: white; border: none; font-size: 1rem; }
+        .map-container { flex: 1 1 500px; height: 450px; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; background: #eee; min-width: 0; }
+        #map { height: 100%; width: 100%; }
+        .map-toggle { margin: 0.5rem 0; }
+        .map-toggle button { background: #fff; border: 1px solid #ccc; border-radius: 4px; padding: 0.4rem 0.8rem; cursor: pointer; }
+        .search-row { display: flex; gap: 0.5rem; align-items: flex-end; }
+        .search-row input { flex: 1; }
+        .search-row .btn { width: auto; margin-top: 0; padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+
+        .preco-info {
+            background: #f9f5ec; border-left: 4px solid var(--accent); border-radius: 6px; padding: 12px 14px; margin-top: 12px;
+            font-size: 0.9rem; color: #2e2e2e; line-height: 1.5;
+        }
+        .preco-info strong { color: var(--primary); }
+        .traducao-box {
+            background: #fff8e1; border-left: 4px solid #f39c12; border-radius: 6px; padding: 10px 14px; margin-top: 12px;
+            display: none; color: #5d4037; font-size: 0.9rem;
+        }
+        .traducao-box label { display: flex; align-items: center; gap: 10px; margin: 0; cursor: pointer; font-weight: 600; }
+        .desconto-box {
+            background: #e8f5e9; border-left: 4px solid #27ae60; border-radius: 6px; padding: 10px 14px; margin-top: 12px;
+            display: none; color: #1e3b2f; font-size: 0.9rem;
+        }
+        .desconto-box label { display: flex; align-items: center; gap: 10px; margin: 0; cursor: pointer; font-weight: 600; }
+        #valorFinalInfo { margin-top: 8px; font-size: 0.9rem; font-weight: bold; color: var(--primary); }
+
+        .upload-hint {
+            background: #e3f2fd; border-left: 4px solid #2196f3; border-radius: 6px; padding: 10px 14px; margin-top: 1rem;
+            font-size: 0.85rem; color: #0d47a1;
+        }
+
+        #cartao-sd { background: #2a2a22; padding: 4rem 0; text-align: center; border-top: 3px solid var(--accent); border-bottom: 3px solid var(--accent); }
+        .sd-specs { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin-top: 2rem; }
+        .sd-item { background: #1e1e1a; border: 1px solid #444; border-radius: var(--radius); padding: 1.5rem 2rem; min-width: 200px; }
+        .sd-item i { font-size: 2rem; color: var(--accent); margin-bottom: 0.5rem; }
+
+        #diferenciais { background: var(--dark); }
+        .benefits-flex { display: flex; flex-wrap: wrap; gap: 3rem; align-items: center; }
+        .benefits-text { flex: 1 1 400px; }
+        .benefits-text ul { list-style: none; margin-top: 1.5rem; }
+        .benefits-text li { margin-bottom: 1.2rem; display: flex; align-items: flex-start; gap: 0.8rem; }
+        .benefits-text i { color: var(--accent); font-size: 1.4rem; margin-top: 0.2rem; }
+        .benefits-image { flex: 1 1 300px; text-align: center; }
+        .benefits-image img { border-radius: var(--radius); border: 2px solid var(--accent); }
+
+        #depoimentos { background: var(--bg-light); color: #2e2e2e; }
+        .testimonial-cards { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
+        .testimonial { background: white; border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); max-width: 350px; flex: 1 1 280px; position: relative; border-left: 4px solid var(--accent); }
+        .media-container { width: 100%; height: 220px; border-radius: 8px; overflow: hidden; margin-bottom: 1rem; background: #1a1a1a; display: flex; align-items: center; justify-content: center; }
+        .media-container img, .media-container video { width: 100%; height: 100%; object-fit: contain; }
+        .media-placeholder { display: flex; flex-direction: column; align-items: center; justify-content: center; color: #888; }
+        .media-placeholder i { font-size: 2.5rem; margin-bottom: 0.3rem; }
+        .testimonial p { font-style: italic; margin: 0.5rem 0 1rem; }
+        .testimonial .author { font-weight: 700; color: var(--primary); }
+
+        #galeria { background: #222; }
+        .gallery-wrapper { position: relative; max-width: 900px; margin: 0 auto; }
+        .gallery-track { display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding: 1rem 0.5rem; scrollbar-width: none; -ms-overflow-style: none; }
+        .gallery-track::-webkit-scrollbar { display: none; }
+        .gallery-item { flex: 0 0 calc(100% - 3rem); max-width: 100%; scroll-snap-align: center; background: #1a1a1a; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); border: 1px solid #444; display: flex; flex-direction: column; align-items: center; }
+        .gallery-item img, .gallery-item video { width: 100%; height: auto; max-height: 500px; object-fit: contain; background: #000; }
+        .gallery-caption { padding: 0.8rem; text-align: center; font-size: 0.9rem; color: #ccc; }
+        .gallery-nav { display: flex; justify-content: center; gap: 1rem; margin-top: 1rem; align-items: center; }
+        .gallery-nav button { background: var(--accent); border: none; color: #1e1e1a; font-size: 1.5rem; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .gallery-nav button:hover { background: #a5621e; }
+        #galleryCounter { font-weight: 700; color: var(--accent); min-width: 60px; text-align: center; }
+
+        @media (min-width: 769px) {
+            .gallery-item { flex: 0 0 calc(50% - 2rem); }
+        }
+
+        #contato { background: var(--dark); }
+        .contact-wrapper { display: flex; flex-wrap: wrap; gap: 3rem; align-items: flex-start; }
+        .contact-info { flex: 1 1 300px; }
+        .contact-info p { margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-size: 1.1rem; }
+        .contact-info i { color: var(--accent); width: 25px; }
+        .contact-form { flex: 1 1 400px; background: #2a2a22; padding: 2rem; border-radius: var(--radius); }
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group input, .form-group textarea { width: 100%; padding: 0.9rem; border: 1px solid #555; background: #1e1e1a; border-radius: 6px; font-family: inherit; font-size: 1rem; color: white; }
+        .form-group input[type="file"] { padding: 0.5rem; background: #2a2a22; color: #ccc; }
+        button[type="submit"] { background: var(--accent); color: #1e1e1a; border: none; padding: 1rem 2rem; border-radius: 4px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
+        button[type="submit"]:hover { background: #a5621e; }
+
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 8px 20px rgba(37,211,102,0.5); z-index: 999; transition: 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.1); }
+
+        footer { background: #0d0d0a; color: #888; text-align: center; padding: 1.5rem 0; border-top: 2px solid var(--accent); }
+
+        @media (max-width: 768px) {
+            .header-content { flex-wrap: wrap; }
+            nav ul { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(0,0,0,0.95); padding: 1rem 0; gap: 0.5rem; z-index: 1001; }
+            nav ul.active { display: flex; }
+            .menu-mobile { display: block; z-index: 1002; }
+            #hero h1 { font-size: 2rem; }
+            .btn-outline { margin-left: 0; margin-top: 1rem; display: block; width: fit-content; margin: 1rem auto 0; }
+            .simulator-container { flex-direction: column; }
+            .map-container { width: 100%; height: 350px; min-height: 350px; }
+            .gallery-item { flex: 0 0 calc(100% - 2rem); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo">
+                <img src="https://i.imgur.com/QMO8U0U.png" alt="Logo Odair Silva GPS">
+                Odair Silva GPS
+            </a>
+            <nav>
+                <ul id="mainNav">
+                    <li><a href="#hero">Início</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#dispositivos">Aparelhos</a></li>
+                    <li><a href="#simulador">Simulador</a></li>
+                    <li><a href="#cartao-sd">Cartão de Memória</a></li>
+                    <li><a href="#galeria">Galeria</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+            <button class="menu-mobile" aria-label="Menu" id="menuToggle">&#9776;</button>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <h1>Mapas BirdsEye para <span>GPS Garmin / Eseek</span></h1>
+            <p>Seja Bem-vindo amigo caçador/controlador de Javali, aqui você encontra mapas de qualidade para seu GPS. Trabalhamos remotamente, com chamada de vídeo, damos um suporte completo.</p>
+            <a href="#simulador" class="btn btn-primary">Simular Cobertura</a>
+            <a href="https://wa.me/5591981743266?text=Olá,%20gostaria%20de%20saber%20sobre%20instalação%20de%20mapas%20para%20GPS." target="_blank" class="btn btn-outline">Fale pelo WhatsApp</a>
+        </div>
+    </section>
+
+    <section id="servicos">
+        <div class="container">
+            <div class="section-title"><h2>Nossos Serviços</h2><p>Tudo feito remotamente, sem precisar enviar seu aparelho.</p></div>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+                    <h3>Instalação Remota</h3>
+                    <p>Conectamos remotamente e instalamos o mapa no seu cartão de memória.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-lock-open"></i></div>
+                    <h3>Desbloqueio BirdsEye</h3>
+                    <p>Liberamos o BirdsEye mesmo sem assinatura Garmin.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-rotate"></i></div>
+                    <h3>Atualização de Software</h3>
+                    <p>Mantemos o sistema do GPS atualizado.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-language"></i></div>
+                    <h3>Tradução de Idioma</h3>
+                    <p>Instalamos o idioma Português do Brasil nos modelos Alpha 100 e Astro 430.</p>
+                </div>
+                <!-- NOVO SERVIÇO: Mapas Topográficos -->
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    <h3>Mapas Topográficos</h3>
+                    <p>Mapas atualizados com curvas de nível, relevo sombreado, polígonos de lavouras, rios, estradas e cidades.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-headset"></i></div>
+                    <h3>Suporte Especializado</h3>
+                    <p>Orientação completa sobre aparelhos, configurações, uso profissional</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dispositivos">
+        <div class="container">
+            <div class="section-title"><h2>Aparelhos que trabalhamos</h2><p>Se o seu não estiver aqui, entre em contato.</p></div>
+            <div class="device-grid">
+                <div class="device-item"><i class="fa-solid fa-map-pin"></i><br><strong>Alpha 100</strong></div>
+                <div class="device-item"><i class="fa-solid fa-map-pin"></i><br><strong>Alpha 200</strong></div>
+                <div class="device-item"><i class="fa-solid fa-map-pin"></i><br><strong>Alpha 200i</strong></div>
+                <div class="device-item"><i class="fa-solid fa-map-pin"></i><br><strong>Alpha 300</strong></div>
+                <div class="device-item"><i class="fa-solid fa-map-pin"></i><br><strong>Alpha 300i</strong></div>
+                <div class="device-item"><i class="fa-solid fa-map-pin"></i><br><strong>Astro 320</strong></div>
+                <div class="device-item"><i class="fa-solid fa-map-pin"></i><br><strong>Astro 430</strong></div>
+                <div class="device-item"><i class="fa-solid fa-map-pin"></i><br><strong>eSEEk</strong></div>
+            </div>
+            <p style="text-align:center; margin-top:1.5rem;">Não encontrou o seu? <a href="#contato" style="color:var(--accent); text-decoration:underline;">Fale conosco</a></p>
+        </div>
+    </section>
+
+    <section id="simulador">
+        <div class="container">
+            <div class="section-title"><h2>Simule sua Cobertura</h2><p>Preencha os dados, clique no mapa ou use a busca. Depois veja a cobertura do seu mapa.</p></div>
+            <div class="simulator-container">
+                <div class="simulator-form">
+                    <label for="cliente">👤 Nome</label>
+                    <input type="text" id="cliente" placeholder="Ex.: Seu nome" required>
+                    <label for="digitos">📱 WhatsApp</label>
+                    <input type="text" id="digitos" placeholder="Ex.: (00) 00000-0000" required>
+                    <label for="deviceModel">📡 Modelo do GPS</label>
+                    <select id="deviceModel" required>
+                        <option value="">-- Selecione --</option>
+                        <option value="alpha100">Alpha 100</option>
+                        <option value="alpha200">Alpha 200</option>
+                        <option value="alpha200i">Alpha 200i</option>
+                        <option value="alpha300">Alpha 300</option>
+                        <option value="alpha300i">Alpha 300i</option>
+                        <option value="astro320">Astro 320</option>
+                        <option value="astro430">Astro 430</option>
+                        <option value="eseek">eSEEk</option>
+                    </select>
+                    <div id="deviceIdGroup">
+                        <label for="deviceId">🆔 ID do GPS</label>
+                        <input type="text" id="deviceId" placeholder="Ex.: 3354243111">
+                        <small style="color:#666;">Obrigatório para aparelhos Garmins.</small>
+                    </div>
+                    <label for="searchLocation">🔎 Buscar local</label>
+                    <div class="search-row">
+                        <input type="text" id="searchLocation" placeholder="Cidade, coordenadas ou link do Google">
+                        <button type="button" id="searchBtn" class="btn" style="background:var(--primary);">🔍</button>
+                    </div>
+                    <small style="color:#666;">Ex: Capanema/PA &nbsp;|&nbsp; -00.0000, -00.0000 &nbsp;|&nbsp; 00°00'00"S 00°00'00"W</small>
+                    <label for="estado">🗺️ Estado</label>
+                    <input type="text" id="estado" placeholder="Ex.: Pará">
+                    <label for="cidade">🏙️ Cidade</label>
+                    <input type="text" id="cidade" placeholder="Ex.: Capanema">
+                    <small style="color:#666;">Preenchidos automaticamente ao buscar cidade.</small>
+                    <label for="mapType">Tipo de cobertura:</label>
+                    <select id="mapType">
+                        <option value="radius">Por raio (Alta Resolução)</option>
+                        <option value="estado">Estadual (resolução padrão)</option>
+                    </select>
+                    <div id="radiusGroup">
+                        <label for="radius">📏 Raio (km)</label>
+                        <input type="number" id="radius" value="100" min="1" max="200" step="any">
+                        <small id="radiusHint" style="color:#e07b39;"></small>
+                    </div>
+
+                    <div id="traducaoDiv" class="traducao-box">
+                        <label>
+                            <input type="checkbox" id="traducao"> Deseja traduzir idioma do aparelho? (+ R$ 50,00)
+                        </label>
+                    </div>
+
+                    <div id="descontoDiv" class="desconto-box">
+                        <label>
+                            <input type="checkbox" id="desconto"> Desejo desconto de R$ 50,00 no valor final
+                        </label>
+                        <div id="valorFinalInfo"></div>
+                    </div>
+
+                    <div class="preco-info" id="precoInfo">
+                        <strong>💰 Tabela de preços por km:</strong><br>
+                        • 1-19 km → <strong>R$ 5,25</strong> por km<br>
+                        • 20-49 km → <strong>R$ 4,00</strong> por km<br>
+                        • 50-100 km → <strong>R$ 3,50</strong> por km<br>
+                        • 101-150 km → <strong>R$ 350,00</strong> (fixo)<br>
+                        • 151-200 km → <strong>R$ 400,00</strong> (fixo)<br>
+                        <span id="precoCalculado"></span>
+                        <div id="valorFinalDisplay" style="margin-top: 8px; font-weight: bold; color: var(--primary);"></div>
+                    </div>
+
+                    <div id="latLngFields">
+                        <label for="lat">Latitude</label>
+                        <input type="text" id="lat" placeholder="Automático ao buscar/clicar" readonly>
+                        <label for="lng">Longitude</label>
+                        <input type="text" id="lng" placeholder="Automático ao buscar/clicar" readonly>
+                    </div>
+                    <div class="map-toggle">
+                        <button type="button" id="toggleSatellite">🛰️ Mapa de Satélite</button>
+                    </div>
+                    <button class="btn" id="drawBtn">📍 Mostrar Cobertura</button>
+                    <button class="btn" id="sendOrderBtn" style="background:#25d366; margin-top:1rem;" disabled>📲 Baixar Arquivo .zip</button>
+                    <div class="upload-hint">
+                        📎 <strong>Após baixar o arquivo .zip</strong>, vá até o <a href="#contato" style="color:var(--accent); text-decoration:underline;">Formulário de Contato</a> no final da página e anexe o arquivo baixado para envio.
+                    </div>
+                    <p style="margin-top:1rem; font-size:0.9rem; color:#555;"><strong>Como usar:</strong> Use a busca ou clique no mapa. Depois digite o raio e clique em Ver Cobertura. O mapa de satélite exibido é apenas uma simulação.</p>
+                </div>
+                <div class="map-container"><div id="map"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cartao-sd">
+        <div class="container">
+            <h2>Cartão de Memória Exigido</h2>
+            <p style="max-width:700px; margin:0 auto 1rem;">Para que a instalação funcione sem falhas:</p>
+            <div class="sd-specs">
+                <div class="sd-item"><i class="fa-solid fa-microchip"></i><p><strong>Capacidade</strong></p><p>Até 32 GB</p><p style="color:red;font-weight:bold;">64 GB não serve!</p></div>
+                <div class="sd-item"><i class="fa-solid fa-gauge-high"></i><p><strong>Classe / Velocidade</strong></p><p>Classe 10, SDHC</p><p>Alta velocidade</p></div>
+                <div class="sd-item"><i class="fa-solid fa-check-double"></i><p><strong>Marcas recomendadas</strong></p><p>Sandisk Ultra 32GB</p><p>Kapbom, Kingston, Samsung</p></div>
+            </div>
+            <p style="margin-top:2rem;"><em>Você mesmo compra o cartão. Não vendemos nem enviamos cartões.</em></p>
+        </div>
+    </section>
+
+    <section id="diferenciais">
+        <div class="container">
+            <div class="benefits-flex">
+                <div class="benefits-text">
+                    <h2>Por que os caçadores nos escolhem?</h2>
+                    <ul>
+                        <li><i class="fa-solid fa-bullseye"></i> <strong>Mapas sob medida</strong> – cobertura exata da sua área.</li>
+                        <li><i class="fa-solid fa-shield-haltered"></i> <strong>100% remoto</strong> – você não envia GPS nem cartão.</li>
+                        <li><i class="fa-solid fa-bolt"></i> <strong>BirdsEye liberado</strong> – mesmo sem assinatura Garmin.</li>
+                        <li><i class="fa-solid fa-headset"></i> <strong>Suporte de caçador para caçador</strong> – entendemos o que você precisa.</li>
+                    </ul>
+                </div>
+                <div class="benefits-image">
+                    <img src="https://i.imgur.com/ML8tJeS.jpeg" alt="Caçador com GPS Garmin">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="depoimentos">
+        <div class="container">
+            <div class="section-title"><h2>O que dizem por aí?</h2></div>
+            <div class="testimonial-cards">
+                <div class="testimonial"><div class="media-container"><img src="https://i.imgur.com/ML8tJeS.jpeg" alt="Depoimento"></div><p>"Mapa exatamente na minha área de javali. Instalação remota sem complicação."</p><div class="author">— João R., MG</div></div>
+                <div class="testimonial"><div class="media-container"><video controls><source src="https://i.imgur.com/CtvuRHn.mp4" type="video/mp4"></video></div><p>"Meu Garmin 300i não tinha Mapa BirdsEye, chamei o Odair e o problema foi resolvido."</p><div class="author">— Matheus S., SC</div></div>
+                <div class="testimonial"><div class="media-container"><video controls><source src="https://i.imgur.com/w82UdyB.mp4" type="video/mp4"></video></div><p>"Meu Garmin Astro 320 não tinha Mapa BirdsEye, o Odair resolveu em minutos."</p><div class="author">— Ronaldo S., RS</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeria">
+        <div class="container">
+            <div class="section-title"><h2>Qualidade dos Mapas nos Aparelhos</h2><p>Veja como os mapas aparecem em diferentes GPS. Arraste para o lado.</p></div>
+            <div class="gallery-wrapper">
+                <div class="gallery-track" id="galleryTrack">
+                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/8SXszol.mp4" type="video/mp4"></video><div class="gallery-caption">BirdsEye ativado</div></div>
+                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/O9eXT6u.mp4" type="video/mp4"></video><div class="gallery-caption">Mapa de Satélite – Alpha 100</div></div>
+                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/x5p38xF.mp4" type="video/mp4"></video><div class="gallery-caption">Astro 320 com BirdsEye ativado</div></div>
+                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/CKYmSFm.mp4" type="video/mp4"></video><div class="gallery-caption">Mapa de Alta qualidade - Alpha 200 e 300</div></div>
+                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/Eb046QO.mp4" type="video/mp4"></video><div class="gallery-caption">Mapa topográfico no Alpha 100</div></div>
+                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/w82UdyB.mp4" type="video/mp4"></video><div class="gallery-caption">Astro 320 com BirdsEye ativado</div></div>
+                </div>
+                <div class="gallery-nav">
+                    <button id="prevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+                    <span id="galleryCounter">1 / 6</span>
+                    <button id="nextBtn"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato">
+        <div class="container">
+            <div class="section-title"><h2>Formulário de Contato</h2><p>Preencha o formulário e anexe o arquivo .zip baixado no simulador.</p></div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <p><i class="fa-brands fa-whatsapp"></i> <strong>WhatsApp:</strong> (91) 98174-3266</p>
+                    <p><i class="fa-solid fa-envelope"></i> <strong>E-mail:</strong> odairdrx@gmail.com</p>
+                    <p style="margin-top:2rem; font-size:0.9rem; color:#aaa;">📎 <strong>Envie o arquivo .zip</strong> que você baixou no simulador. Assim consigo processar seu pedido com mais agilidade.</p>
+                </div>
+                <form class="contact-form" action="https://formspree.io/f/mojblwrn" method="POST" enctype="multipart/form-data">
+                    <div class="form-group"><input type="text" name="Nome" placeholder="Seu nome" required></div>
+                    <div class="form-group"><input type="email" name="E-mail" placeholder="Seu e-mail" required></div>
+                    <div class="form-group"><input type="tel" name="Telefone" placeholder="WhatsApp com DDD"></div>
+                    <div class="form-group"><textarea name="Mensagem" placeholder="Descreva o que você precisa... Envie O ID do seu aparelho. E Anexar o GarminDevice." required></textarea></div>
+                    <div class="form-group">
+                        <label for="anexo" style="display:block; margin-bottom:0.3rem; color:#ccc;">📎 Anexar arquivo .zip</label>
+                        <input type="file" id="anexo" name="anexo" accept=".zip">
+                    </div>
+                    <button type="submit">Enviar agora</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/5591981743266?text=Olá%20Odair,%20quero%20instalar%20mapas%20para%20GPS." target="_blank" class="whatsapp-float" title="Chamar no WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <footer>
+        <div class="container"><p>&copy; 2026 Odair Silva GPS · Mapas para caçadores</p></div>
+    </footer>
+
+    <script>
+        // ---------- Funções de geração de arquivos (GPX/KML/PDF) ----------
+        function generateGridGPX(centerLat, centerLon, cliente, digitos, radiusKm) {
+            const MAX_CELL_KM = 40;
+            const sideTotalKm = radiusKm * 2;
+            const cellsPerSide = Math.ceil(sideTotalKm / MAX_CELL_KM);
+            const cellSizeKm = sideTotalKm / cellsPerSide;
+            const mPerDegLat = 111320;
+            const latRad = centerLat * Math.PI / 180;
+            const mPerDegLon = 111320 * Math.cos(latRad);
+            const halfSideMeters = (sideTotalKm * 1000) / 2;
+            const dLatTotal = 2 * (halfSideMeters / mPerDegLat);
+            const dLonTotal = 2 * (halfSideMeters / mPerDegLon);
+            const rows = cellsPerSide, cols = cellsPerSide;
+            const cellDLat = dLatTotal / rows, cellDLon = dLonTotal / cols;
+            const NW_lat = centerLat + halfSideMeters / mPerDegLat;
+            const NW_lon = centerLon - halfSideMeters / mPerDegLon;
+            let tracksXml = '';
+            for (let i = 0; i < rows; i++) {
+                for (let j = 0; j < cols; j++) {
+                    const num = (i * cols + j + 1).toString().padStart(2, '0');
+                    const nw = { lat: NW_lat - i * cellDLat, lon: NW_lon + j * cellDLon };
+                    const ne = { lat: NW_lat - i * cellDLat, lon: NW_lon + (j+1) * cellDLon };
+                    const se = { lat: NW_lat - (i+1) * cellDLat, lon: NW_lon + (j+1) * cellDLon };
+                    const sw = { lat: NW_lat - (i+1) * cellDLat, lon: NW_lon + j * cellDLon };
+                    tracksXml += `\n    <trk><name>Mapa ${num} – ${cliente} – ${digitos}</name><trkseg>`;
+                    [nw, ne, se, sw].forEach(v => tracksXml += `\n        <trkpt lat="${v.lat.toFixed(6)}" lon="${v.lon.toFixed(6)}"></trkpt>`);
+                    tracksXml += `\n        <trkpt lat="${nw.lat.toFixed(6)}" lon="${nw.lon.toFixed(6)}"></trkpt></trkseg></trk>`;
+                }
+            }
+            return `<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="OdairSilvaGPS" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata><name>Grade ${sideTotalKm}×${sideTotalKm} km – ${cliente} – ${digitos}</name></metadata>
+  <wpt lat="${centerLat.toFixed(6)}" lon="${centerLon.toFixed(6)}"><name>CENTRO</name></wpt>
+${tracksXml}
+</gpx>`;
+        }
+
+        function generateKML(centerLat, centerLon, cliente, digitos, radiusKm) {
+            const sideTotalKm = radiusKm * 2;
+            const mPerDegLat = 111320;
+            const latRad = centerLat * Math.PI / 180;
+            const mPerDegLon = 111320 * Math.cos(latRad);
+            const halfSideMeters = (sideTotalKm * 1000) / 2;
+            const north = centerLat + halfSideMeters / mPerDegLat;
+            const south = centerLat - halfSideMeters / mPerDegLat;
+            const east = centerLon + halfSideMeters / mPerDegLon;
+            const west = centerLon - halfSideMeters / mPerDegLon;
+            return `<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2"><Document>
+<Placemark><name>Polígono</name><Polygon><outerBoundaryIs><LinearRing><coordinates>${west},${north} ${east},${north} ${east},${south} ${west},${south} ${west},${north}</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>
+<Placemark><name>CENTRO</name><Point><coordinates>${centerLon},${centerLat}</coordinates></Point></Placemark>
+<Placemark><name>Vértice NW</name><Point><coordinates>${west},${north}</coordinates></Point></Placemark>
+<Placemark><name>Vértice NE</name><Point><coordinates>${east},${north}</coordinates></Point></Placemark>
+<Placemark><name>Vértice SE</name><Point><coordinates>${east},${south}</coordinates></Point></Placemark>
+<Placemark><name>Vértice SW</name><Point><coordinates>${west},${south}</coordinates></Point></Placemark>
+</Document></kml>`;
+        }
+
+        function calcularValorPorRaio(raioKm) {
+            if (raioKm >= 1 && raioKm <= 19) return raioKm * 5.25;
+            if (raioKm >= 20 && raioKm <= 49) return raioKm * 4.00;
+            if (raioKm >= 50 && raioKm <= 100) return raioKm * 3.50;
+            if (raioKm >= 101 && raioKm <= 150) return 350;
+            if (raioKm >= 151 && raioKm <= 200) return 400;
+            return null;
+        }
+
+        function crc16CCITT(data) {
+            let crc = 0xFFFF;
+            for (let i = 0; i < data.length; i++) {
+                crc ^= data.charCodeAt(i) << 8;
+                for (let j = 0; j < 8; j++) crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+            }
+            return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+        }
+
+        function gerarPixCode(valor) {
+            const chave = '+5591981743266', nome = 'JOSE ODAIR DA SILVA', cidade = 'CAPANEMA';
+            const valorStr = valor.toFixed(2);
+            const base = '00020101021126360014br.gov.bcb.pix0114' + chave + '5204000053039865802BR5919' + nome + '6008' + cidade + '62070503***';
+            const comValor = base + '54' + valorStr.length.toString().padStart(2,'0') + valorStr;
+            return comValor + '6304' + crc16CCITT(comValor + '6304');
+        }
+
+        async function loadQRCodeImage(pixCode) {
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(pixCode)}`;
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+                img.onload = () => resolve(img);
+                img.onerror = () => reject(new Error('QR Code não disponível'));
+                img.src = qrUrl;
+            });
+        }
+
+        async function gerarReciboPDF(cliente, digitos, gpsid, modelo, traducao, desconto, centro, valorTotal, raioKm) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(16);
+            doc.text('RECIBO DE SERVIÇO', 105, 20, { align: 'center' });
+            doc.setFontSize(12);
+            let y = 35;
+            doc.text(`Cliente: ${cliente}`, 20, y); y += 8;
+            doc.text(`WhatsApp: ${digitos}`, 20, y); y += 8;
+            if (modelo !== 'eseek') { doc.text(`ID do GPS: ${gpsid}`, 20, y); y += 8; }
+            doc.text(`Modelo: ${modelo.toUpperCase()}`, 20, y); y += 8;
+            doc.text(`Raio: ${raioKm} km`, 20, y); y += 8;
+            if (traducao) { doc.text('Tradução de idioma: Sim (+R$50)', 20, y); y += 8; }
+            if (desconto) { doc.text('Desconto promocional: Sim (-R$50)', 20, y); y += 8; }
+            y += 5;
+            doc.text(`Valor total: R$ ${valorTotal.toFixed(2).replace('.', ',')}`, 20, y); y += 10;
+            doc.text(`Centro: ${centro}`, 20, y); y += 10;
+            doc.text('Pagamento via PIX – Chave: 91981743266', 20, y);
+            const pixCode = gerarPixCode(valorTotal);
+            try {
+                const qrImage = await loadQRCodeImage(pixCode);
+                doc.addImage(qrImage, 'PNG', 20, y+10, 30, 30);
+            } catch(e) {}
+            return doc.output('blob');
+        }
+
+        function sanitizeFilename(str) {
+            return str.replace(/[\\\/:*?"<>|]/g, '').replace(/\s+/g, ' ').trim();
+        }
+
+        // ---------- PARSE DE COORDENADAS E BUSCA ----------
+        function parseGoogleMapsLink(url) {
+            const patterns = [/@(-?\d+\.?\d*),(-?\d+\.?\d*)/, /\/place\/(-?\d+\.?\d*),(-?\d+\.?\d*)/, /[?&]q=(-?\d+\.?\d*),(-?\d+\.?\d*)/, /[?&]center=(-?\d+\.?\d*)[,\s]+(-?\d+\.?\d*)/];
+            for (let p of patterns) {
+                const match = url.match(p);
+                if (match && match.length >= 3) { const lat = parseFloat(match[1]), lon = parseFloat(match[2]); if (!isNaN(lat) && !isNaN(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) return { lat, lon }; }
+            }
+            return null;
+        }
+
+        function parseDecimalCoords(str) {
+            const parts = str.replace(/[°'"]/g, '').split(/[,\s]+/).filter(s => s.length > 0);
+            if (parts.length === 2) { const lat = parseFloat(parts[0]), lon = parseFloat(parts[1]); if (!isNaN(lat) && !isNaN(lon) && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) return { lat, lon }; }
+            return null;
+        }
+
+        function parseDMS(str) {
+            const dmsRegex = /(\d{1,3})\s*°\s*(\d{1,2})\s*'\s*(\d{1,2}(?:\.\d+)?)\s*"?\s*([NnSs])\s*[,\s]+(\d{1,3})\s*°\s*(\d{1,2})\s*'\s*(\d{1,2}(?:\.\d+)?)\s*"?\s*([EeWw])/;
+            const match = str.match(dmsRegex);
+            if (match) {
+                let lat = parseInt(match[1]) + parseInt(match[2])/60 + parseFloat(match[3])/3600; if (match[4].toUpperCase() === 'S') lat = -lat;
+                let lon = parseInt(match[5]) + parseInt(match[6])/60 + parseFloat(match[7])/3600; if (match[8].toUpperCase() === 'W') lon = -lon;
+                if (lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) return { lat, lon };
+            }
+            return null;
+        }
+
+        async function geocodeCitySearch(query) {
+            const resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&limit=1`);
+            const data = await resp.json();
+            if (!data.length) throw new Error('Local não encontrado');
+            const parts = data[0].display_name.split(',').map(s => s.trim());
+            let estado = '', cidade = parts[0] || '';
+            const ufRegex = /\b([A-Z]{2})\b/;
+            for (let i = 1; i < parts.length; i++) { const ufMatch = parts[i].match(ufRegex); if (ufMatch) { estado = ufMatch[1]; break; } if (parts[i].length > 3 && !/\d/.test(parts[i])) estado = parts[i]; }
+            if (!estado && parts.length >= 2) estado = parts[parts.length-2].trim();
+            return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), cidade, estado };
+        }
+
+        // ---------- MAPA, MENU, GALERIA E PREÇOS ----------
+        document.addEventListener('DOMContentLoaded', function() {
+            const map = L.map('map').setView([-14.2350, -51.9253], 4);
+            const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap', maxZoom: 19 });
+            const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri', maxZoom: 19 });
+            const labelsLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png', { attribution: 'Labels &copy; CartoDB', maxZoom: 19, opacity: 0.9 });
+            osmLayer.addTo(map);
+            let currentMode = 'osm';
+
+            const menuToggle = document.getElementById('menuToggle'), mainNav = document.getElementById('mainNav');
+            menuToggle.addEventListener('click', function() { mainNav.classList.toggle('active'); setTimeout(() => map.invalidateSize(), 300); });
+            mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { mainNav.classList.remove('active'); setTimeout(() => map.invalidateSize(), 300); }));
+            window.addEventListener('resize', () => map.invalidateSize());
+            setTimeout(() => map.invalidateSize(), 500);
+
+            document.getElementById('toggleSatellite').addEventListener('click', function() {
+                if (currentMode === 'osm') { map.removeLayer(osmLayer); map.addLayer(satelliteLayer); map.addLayer(labelsLayer); currentMode = 'satellite'; this.innerHTML = '🗺️ Ver mapa'; }
+                else { map.removeLayer(satelliteLayer); map.removeLayer(labelsLayer); map.addLayer(osmLayer); currentMode = 'osm'; this.innerHTML = '🛰️ Ver satélite'; }
+            });
+
+            let rectangleLayer = null, markerCenter = null, currentBounds = null;
+            const deviceModel = document.getElementById('deviceModel'), deviceIdGroup = document.getElementById('deviceIdGroup'), mapType = document.getElementById('mapType'), radiusGroup = document.getElementById('radiusGroup'), radiusInput = document.getElementById('radius'), radiusHint = document.getElementById('radiusHint'), latEl = document.getElementById('lat'), lngEl = document.getElementById('lng'), drawBtn = document.getElementById('drawBtn'), sendOrderBtn = document.getElementById('sendOrderBtn'), estadoInput = document.getElementById('estado'), cidadeInput = document.getElementById('cidade'), searchInput = document.getElementById('searchLocation'), searchBtn = document.getElementById('searchBtn');
+            const traducaoCheck = document.getElementById('traducao'), descontoCheck = document.getElementById('desconto'), traducaoDiv = document.getElementById('traducaoDiv'), descontoDiv = document.getElementById('descontoDiv'), precoSpan = document.getElementById('precoCalculado'), valorFinalDisplay = document.getElementById('valorFinalDisplay'), valorFinalInfo = document.getElementById('valorFinalInfo');
+            const modelosTraducao = ['alpha100', 'astro430'];
+            const modelosDesconto = ['alpha200', 'alpha200i', 'alpha300', 'alpha300i'];
+
+            function atualizarValores() {
+                const modelo = deviceModel.value;
+                const raioKm = parseFloat(radiusInput.value);
+                const valorBase = calcularValorPorRaio(raioKm);
+                
+                traducaoDiv.style.display = modelosTraducao.includes(modelo) ? 'block' : 'none';
+                if (!modelosTraducao.includes(modelo)) traducaoCheck.checked = false;
+
+                const exibirDesconto = modelosDesconto.includes(modelo) && raioKm >= 100;
+                descontoDiv.style.display = exibirDesconto ? 'block' : 'none';
+                if (!exibirDesconto) descontoCheck.checked = false;
+
+                if (valorBase !== null && !isNaN(raioKm)) {
+                    const precoUnitario = raioKm <= 100 ? (valorBase / raioKm).toFixed(2) : null;
+                    if (raioKm >= 101) {
+                        precoSpan.innerHTML = `<br>✅ <strong>Valor para ${raioKm} km: R$ ${valorBase.toFixed(2).replace('.', ',')}</strong>`;
+                    } else {
+                        precoSpan.innerHTML = `<br>✅ <strong>Valor para ${raioKm} km: R$ ${valorBase.toFixed(2).replace('.', ',')}</strong> (${raioKm} km × R$ ${precoUnitario.replace('.', ',')}/km)`;
+                    }
+
+                    let valorFinal = valorBase;
+                    const traducao = modelosTraducao.includes(modelo) ? traducaoCheck.checked : false;
+                    const desconto = modelosDesconto.includes(modelo) && exibirDesconto ? descontoCheck.checked : false;
+                    if (traducao) valorFinal += 50;
+                    if (desconto && valorBase >= 350) valorFinal -= 50;
+
+                    valorFinalDisplay.textContent = `💲 Valor final: R$ ${valorFinal.toFixed(2).replace('.', ',')}`;
+
+                    if (exibirDesconto) {
+                        const valorComDesconto = (valorBase >= 350) ? valorBase - 50 : valorBase;
+                        if (desconto) {
+                            valorFinalInfo.textContent = valorBase >= 350 ? `✅ Desconto aplicado!` : `⚠️ Desconto exige mínimo de R$ 350,00.`;
+                        } else {
+                            valorFinalInfo.textContent = valorBase >= 350 ? `💡 Com desconto ficaria R$ ${valorComDesconto.toFixed(2).replace('.', ',')}` : `💡 Valor mínimo para desconto: R$ 350,00`;
+                        }
+                    } else {
+                        valorFinalInfo.textContent = '';
+                    }
+                } else {
+                    precoSpan.innerHTML = '';
+                    valorFinalDisplay.textContent = '';
+                    valorFinalInfo.textContent = '';
+                }
+            }
+
+            deviceModel.addEventListener('change', function() {
+                const modelo = this.value;
+                deviceIdGroup.style.display = (modelo === 'eseek') ? 'none' : 'block';
+                updateRadiusHint();
+                atualizarValores();
+                checkSendButton();
+            });
+
+            mapType.addEventListener('change', function() {
+                radiusGroup.style.display = this.value === 'estado' ? 'none' : 'block';
+                updateRadiusHint();
+                atualizarValores();
+                checkSendButton();
+            });
+
+            radiusInput.addEventListener('input', function() {
+                updateRadiusHint();
+                atualizarValores();
+                checkSendButton();
+            });
+
+            traducaoCheck.addEventListener('change', atualizarValores);
+            descontoCheck.addEventListener('change', atualizarValores);
+
+            function updateRadiusHint() {
+                const m = deviceModel.value;
+                radiusHint.textContent = mapType.value === 'estado' ? 'Mapa estadual: resolução padrão.' : (m === 'eseek' ? (radiusInput.value > 100 ? '⚠️ Máx. 100 km para eSEEk' : 'eSEEk: máx. 100 km') : (m ? (radiusInput.value > 100 ? 'Raio > 100 km: resolução padrão' : 'Raio até 100 km: alta resolução') : ''));
+            }
+
+            function checkSendButton() {
+                const ok = deviceModel.value && latEl.value.trim() && lngEl.value.trim() &&
+                           (mapType.value === 'estado' || (radiusInput.value && !isNaN(parseFloat(radiusInput.value)))) &&
+                           document.getElementById('cliente').value.trim() && document.getElementById('digitos').value.trim() &&
+                           (deviceModel.value === 'eseek' || document.getElementById('deviceId').value.trim());
+                sendOrderBtn.disabled = !ok;
+            }
+
+            ['cliente','digitos','deviceId'].forEach(id => document.getElementById(id)?.addEventListener('input', checkSendButton));
+            [latEl, lngEl, radiusInput, deviceModel, mapType].forEach(el => {
+                if(el) el.addEventListener('input', checkSendButton);
+                if(el) el.addEventListener('change', checkSendButton);
+            });
+
+            map.on('click', function(e) {
+                latEl.value = e.latlng.lat.toFixed(6); lngEl.value = e.latlng.lng.toFixed(6);
+                if (markerCenter) map.removeLayer(markerCenter);
+                markerCenter = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map).bindPopup('Centro da região').openPopup();
+                checkSendButton();
+            });
+
+            searchBtn.addEventListener('click', async function() {
+                const query = searchInput.value.trim(); if (!query) return;
+                searchBtn.disabled = true; searchBtn.textContent = '⏳';
+                try {
+                    let coords = null;
+                    if (query.includes('google.com/maps') || query.includes('maps.app.goo.gl') || query.includes('goo.gl/maps')) coords = parseGoogleMapsLink(query);
+                    if (!coords) coords = parseDMS(query);
+                    if (!coords) coords = parseDecimalCoords(query);
+                    if (!coords) { const geo = await geocodeCitySearch(query); coords = { lat: geo.lat, lon: geo.lon }; if (geo.estado) estadoInput.value = geo.estado; if (geo.cidade) cidadeInput.value = geo.cidade; }
+                    latEl.value = coords.lat.toFixed(6); lngEl.value = coords.lon.toFixed(6);
+                    if (markerCenter) map.removeLayer(markerCenter);
+                    markerCenter = L.marker([coords.lat, coords.lon]).addTo(map).bindPopup(query.substring(0,50)).openPopup();
+                    map.setView([coords.lat, coords.lon], 12); checkSendButton();
+                } catch (e) { alert('Não foi possível encontrar o local.'); }
+                finally { searchBtn.disabled = false; searchBtn.textContent = '🔍'; }
+            });
+
+            async function geocodeCity(estado, cidade) {
+                const resp = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(cidade + ', ' + estado + ', Brasil')}&limit=1`);
+                const data = await resp.json();
+                if (!data.length) throw new Error('Cidade não encontrada');
+                return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+            }
+
+            drawBtn.addEventListener('click', async function() {
+                let lat = parseFloat(latEl.value), lng = parseFloat(lngEl.value);
+                if (isNaN(lat) || isNaN(lng)) {
+                    const estado = estadoInput.value.trim(), cidade = cidadeInput.value.trim();
+                    if (!estado || !cidade) { alert('Use a busca, clique no mapa ou preencha cidade e estado.'); return; }
+                    try {
+                        drawBtn.textContent = '🔍 Buscando cidade...'; drawBtn.disabled = true;
+                        const geo = await geocodeCity(estado, cidade);
+                        lat = geo.lat; lng = geo.lon;
+                        latEl.value = lat.toFixed(6); lngEl.value = lng.toFixed(6);
+                        if (markerCenter) map.removeLayer(markerCenter);
+                        markerCenter = L.marker([lat, lng]).addTo(map).bindPopup(`${cidade}, ${estado}`).openPopup();
+                        map.setView([lat, lng], 10);
+                    } catch (e) { alert('Não foi possível encontrar a cidade.'); return; }
+                    finally { drawBtn.textContent = '📍 Mostrar Cobertura'; drawBtn.disabled = false; }
+                }
+                let radius = parseFloat(radiusInput.value);
+                if (mapType.value === 'estado') radius = 300;
+                else if (deviceModel.value === 'eseek' && radius > 100) radius = 100;
+                if (isNaN(radius)) radius = 50;
+                const delta = radius / 111.32;
+                currentBounds = { north: lat + delta, south: lat - delta, east: lng + delta, west: lng - delta, center: { lat, lng }, radius };
+                if (rectangleLayer) map.removeLayer(rectangleLayer);
+                rectangleLayer = L.rectangle([[currentBounds.south, currentBounds.west], [currentBounds.north, currentBounds.east]], { color: '#c47a2b', weight: 3, fillColor: '#e07b39', fillOpacity: 0.2 }).addTo(map).bindPopup(`Área: ${radius.toFixed(0)} km de raio`).openPopup();
+                map.fitBounds([[currentBounds.south, currentBounds.west], [currentBounds.north, currentBounds.east]], {padding:[20,20]});
+                checkSendButton();
+                atualizarValores();
+            });
+
+            sendOrderBtn.addEventListener('click', async function() {
+                if (!currentBounds) { alert('Primeiro clique em "Mostrar Cobertura".'); return; }
+                const cliente = document.getElementById('cliente').value.trim();
+                const digitos = document.getElementById('digitos').value.trim();
+                const modelo = deviceModel.value;
+                const gpsid = document.getElementById('deviceId').value.trim();
+                const raioKm = currentBounds.radius;
+                const centerLat = currentBounds.center.lat, centerLon = currentBounds.center.lng;
+                const centroDesc = `${centerLat.toFixed(4)}, ${centerLon.toFixed(4)}`;
+                let valorTotal = calcularValorPorRaio(raioKm);
+                const traducao = modelosTraducao.includes(modelo) ? traducaoCheck.checked : false;
+                const desconto = modelosDesconto.includes(modelo) && raioKm >= 100 ? descontoCheck.checked : false;
+                if (traducao) valorTotal += 50;
+                if (desconto && valorTotal >= 350) valorTotal -= 50;
+
+                const zip = new JSZip();
+                const folderName = `Pedido_${sanitizeFilename(cliente)}_${digitos}`.replace(/\s+/g,'_');
+                const folder = zip.folder(folderName);
+                try {
+                    if (modelo === 'eseek') {
+                        folder.file(`${sanitizeFilename(cliente)}_${digitos}.kml`, generateKML(centerLat, centerLon, cliente, digitos, raioKm));
+                    } else {
+                        folder.file(`${sanitizeFilename(cliente)}_${digitos}.gpx`, generateGridGPX(centerLat, centerLon, cliente, digitos, raioKm));
+                    }
+                    const pdfBlob = await gerarReciboPDF(cliente, digitos, gpsid, modelo, traducao, desconto, centroDesc, valorTotal, raioKm);
+                    folder.file(`Recibo_${sanitizeFilename(cliente)}_${digitos}.pdf`, pdfBlob);
+                    const zipBlob = await zip.generateAsync({type:'blob'});
+                    saveAs(zipBlob, `${folderName}.zip`);
+                    alert('✅ Arquivo baixado! Vá até o final da página e anexe o .zip no formulário de contato.');
+                } catch(e) { alert('Erro: ' + e.message); }
+            });
+
+            // ----- GALERIA -----
+            const track = document.getElementById('galleryTrack'), prevBtn = document.getElementById('prevBtn'), nextBtn = document.getElementById('nextBtn'), counter = document.getElementById('galleryCounter'), items = track.querySelectorAll('.gallery-item');
+            let currentIndex = 0;
+            function updateGallery() {
+                const itemWidth = items[0].offsetWidth + 16;
+                track.scrollTo({ left: currentIndex * itemWidth, behavior: 'smooth' });
+                counter.textContent = `${currentIndex + 1} / ${items.length}`;
+            }
+            prevBtn.addEventListener('click', () => { if (currentIndex > 0) { currentIndex--; updateGallery(); } });
+            nextBtn.addEventListener('click', () => { if (currentIndex < items.length - 1) { currentIndex++; updateGallery(); } });
+            track.addEventListener('scroll', () => {
+                const itemWidth = items[0].offsetWidth + 16;
+                currentIndex = Math.round(track.scrollLeft / itemWidth);
+                counter.textContent = `${currentIndex + 1} / ${items.length}`;
+            });
+        });
+    </script>
+</body>
+</html>
