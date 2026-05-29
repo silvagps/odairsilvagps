@@ -215,7 +215,7 @@
                     <li><a href="#simulador">Simulador</a></li>
                     <li><a href="#cartao-sd">Cartão de Memória</a></li>
                     <li><a href="#galeria">Galeria</a></li>
-                    <li><a href="blog.html">Blog</a></li> <!-- NOVO LINK -->
+                    <li><a href="blog.html">Blog</a></li>
                     <li><a href="#contato">Contato</a></li>
                 </ul>
             </nav>
@@ -225,8 +225,8 @@
 
     <section id="hero">
         <div class="container">
-            <h1>Mapas para <span>Caçadores</span></h1>
-            <p>Instalação remota de mapas de satélite em GPS Garmin e Eseek. Suas caçadas mais seguras e confiáveis.</p>
+            <h1>Mapas BirdsEye para <span>gps garmin / eseek</span></h1>
+            <p>Seja Bem-vindo amigo caçador/controlador de Javali, aqui você encontra mapas de qualidade para seu GPS. Trabalhamos remotamente, com chamada de vídeo, damos um suporte completo.</p>
             <a href="#simulador" class="btn btn-primary">Simular Cobertura</a>
             <a href="https://wa.me/5591981743266?text=Olá,%20gostaria%20de%20saber%20sobre%20instalação%20de%20mapas%20para%20GPS." target="_blank" class="btn btn-outline">Fale pelo WhatsApp</a>
         </div>
@@ -268,10 +268,10 @@
             <div class="section-title"><h2>Simule sua Cobertura</h2><p>Preencha os dados, clique no mapa ou use a busca. Depois veja a cobertura do seu mapa.</p></div>
             <div class="simulator-container">
                 <div class="simulator-form">
-                    <label for="cliente">👤 Seu Nome</label>
-                    <input type="text" id="cliente" placeholder="Ex.: João da Silva" required>
+                    <label for="cliente">👤 Nome</label>
+                    <input type="text" id="cliente" placeholder="Ex.: Seu nome" required>
                     <label for="digitos">📱 WhatsApp</label>
-                    <input type="text" id="digitos" placeholder="Ex.: (91) 98174-3266" required>
+                    <input type="text" id="digitos" placeholder="Ex.: (00) 00000-0000" required>
                     <label for="deviceModel">📡 Modelo do GPS</label>
                     <select id="deviceModel" required>
                         <option value="">-- Selecione --</option>
@@ -294,11 +294,11 @@
                         <input type="text" id="searchLocation" placeholder="Cidade, coordenadas ou link do Google Maps">
                         <button type="button" id="searchBtn" class="btn" style="background:var(--primary);">🔍</button>
                     </div>
-                    <small style="color:#666;">Ex: Campinas, SP &nbsp;|&nbsp; -20.4265, -47.2949 &nbsp;|&nbsp; 20°18'30"S 46°11'13"W</small>
+                    <small style="color:#666;">Ex: Capanema/PA &nbsp;|&nbsp; -20.4265, -47.2949 &nbsp;|&nbsp; 20°18'30"S 46°11'13"W</small>
                     <label for="estado">🗺️ Estado</label>
-                    <input type="text" id="estado" placeholder="Ex.: São Paulo">
+                    <input type="text" id="estado" placeholder="Ex.: Pará">
                     <label for="cidade">🏙️ Cidade</label>
-                    <input type="text" id="cidade" placeholder="Ex.: Campinas">
+                    <input type="text" id="cidade" placeholder="Ex.: Capanema">
                     <small style="color:#666;">Preenchidos automaticamente ao buscar cidade.</small>
                     <label for="mapType">Tipo de cobertura:</label>
                     <select id="mapType">
@@ -362,8 +362,8 @@
             <p style="max-width:700px; margin:0 auto 1rem;">Para que a instalação funcione sem falhas:</p>
             <div class="sd-specs">
                 <div class="sd-item"><i class="fa-solid fa-microchip"></i><p><strong>Capacidade</strong></p><p>Até 32 GB</p><p style="color:red;font-weight:bold;">64 GB não serve!</p></div>
-                <div class="sd-item"><i class="fa-solid fa-gauge-high"></i><p><strong>Classe / Velocidade</strong></p><p>Classe 10, SDHC</p><p>Alta velocidade</p></div>
-                <div class="sd-item"><i class="fa-solid fa-check-double"></i><p><strong>Marcas recomendadas</strong></p><p>Sandisk Ultra 32GB</p><p>Kapbom, Kingston, Samsung</p></div>
+                <div class="sd-item"><i class="fa-solid fa-gauge-high"></i><p><strong>Classe / Velocidade</strong></p><p>Classe 10 | SDHC</p><p>Alta velocidade</p></div>
+                <div class="sd-item"><i class="fa-solid fa-check-double"></i><p><strong>Marcas recomendadas</strong></p><p>Sandisk Ultra 32GB (Original)</p><p>Kapbom, Kingston, Samsung</p></div>
             </div>
             <p style="margin-top:2rem;"><em>Você mesmo compra o cartão. Não vendemos nem enviamos cartões.</em></p>
         </div>
@@ -429,7 +429,9 @@
                     <p><i class="fa-solid fa-envelope"></i> <strong>E-mail:</strong> odairdrx@gmail.com</p>
                     <p style="margin-top:2rem; font-size:0.9rem; color:#aaa;">📎 <strong>Envie o arquivo .zip</strong> que você baixou no simulador. Assim consigo processar seu pedido com mais agilidade.</p>
                 </div>
-                <form class="contact-form" action="https://formspree.io/f/mojblwrn" method="POST" enctype="multipart/form-data">
+                <!-- FORMULÁRIO ALTERADO PARA NETLIFY FORMS -->
+                <form class="contact-form" name="contato" method="POST" enctype="multipart/form-data" netlify>
+                    <input type="hidden" name="form-name" value="contato">
                     <div class="form-group"><input type="text" name="Nome" placeholder="Seu nome" required></div>
                     <div class="form-group"><input type="email" name="E-mail" placeholder="Seu e-mail" required></div>
                     <div class="form-group"><input type="tel" name="Telefone" placeholder="WhatsApp com DDD"></div>
@@ -444,7 +446,7 @@
         </div>
     </section>
 
-    <a href="https://wa.me/5591981743266?text=Olá%20Odair,%20quero%20instalar%20mapas%20para%20GPS." target="_blank" class="whatsapp-float" title="Chamar no WhatsApp">
+    <a href="https://wa.me/5591981743266?text=Olá%20Odair,%20quero%20instalar%20mapa%20para%20GPS." target="_blank" class="whatsapp-float" title="Chamar no WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
