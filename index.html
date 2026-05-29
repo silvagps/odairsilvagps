@@ -215,6 +215,7 @@
                     <li><a href="#simulador">Simulador</a></li>
                     <li><a href="#cartao-sd">Cartão de Memória</a></li>
                     <li><a href="#galeria">Galeria</a></li>
+                    <li><a href="blog.html">Blog</a></li> <!-- NOVO LINK -->
                     <li><a href="#contato">Contato</a></li>
                 </ul>
             </nav>
@@ -224,8 +225,8 @@
 
     <section id="hero">
         <div class="container">
-            <h1>Mapas BirdsEye para <span>GPS Garmin / Eseek</span></h1>
-            <p>Seja Bem-vindo amigo caçador/controlador de Javali, aqui você encontra mapas de qualidade para seu GPS. Trabalhamos remotamente, com chamada de vídeo, damos um suporte completo.</p>
+            <h1>Mapas para <span>Caçadores</span></h1>
+            <p>Instalação remota de mapas de satélite em GPS Garmin e Eseek. Suas caçadas mais seguras e confiáveis.</p>
             <a href="#simulador" class="btn btn-primary">Simular Cobertura</a>
             <a href="https://wa.me/5591981743266?text=Olá,%20gostaria%20de%20saber%20sobre%20instalação%20de%20mapas%20para%20GPS." target="_blank" class="btn btn-outline">Fale pelo WhatsApp</a>
         </div>
@@ -235,37 +236,12 @@
         <div class="container">
             <div class="section-title"><h2>Nossos Serviços</h2><p>Tudo feito remotamente, sem precisar enviar seu aparelho.</p></div>
             <div class="cards-grid">
-                <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-satellite-dish"></i></div>
-                    <h3>Instalação Remota</h3>
-                    <p>Conectamos remotamente e instalamos o mapa no seu cartão de memória.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-lock-open"></i></div>
-                    <h3>Desbloqueio BirdsEye</h3>
-                    <p>Liberamos o BirdsEye mesmo sem assinatura Garmin.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-rotate"></i></div>
-                    <h3>Atualização de Software</h3>
-                    <p>Mantemos o sistema do GPS atualizado.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-language"></i></div>
-                    <h3>Tradução de Idioma</h3>
-                    <p>Instalamos o idioma Português do Brasil nos modelos Alpha 100 e Astro 430.</p>
-                </div>
-                <!-- NOVO SERVIÇO: Mapas Topográficos -->
-                <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-layer-group"></i></div>
-                    <h3>Mapas Topográficos</h3>
-                    <p>Mapas atualizados com curvas de nível, relevo sombreado, polígonos de lavouras, rios, estradas e cidades.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon"><i class="fa-solid fa-headset"></i></div>
-                    <h3>Suporte Especializado</h3>
-                    <p>Orientação completa sobre aparelhos, configurações, uso profissional</p>
-                </div>
+                <div class="card"><div class="card-icon"><i class="fa-solid fa-satellite-dish"></i></div><h3>Instalação Remota</h3><p>Conectamos remotamente e instalamos o mapa no seu cartão SD.</p></div>
+                <div class="card"><div class="card-icon"><i class="fa-solid fa-lock-open"></i></div><h3>Desbloqueio BirdsEye</h3><p>Liberamos o BirdsEye mesmo sem assinatura Garmin.</p></div>
+                <div class="card"><div class="card-icon"><i class="fa-solid fa-rotate"></i></div><h3>Atualização de Software</h3><p>Mantemos o sistema do GPS atualizado.</p></div>
+                <div class="card"><div class="card-icon"><i class="fa-solid fa-language"></i></div><h3>Tradução de Idioma</h3><p>Instalamos o idioma português do Brasil nos modelos Alpha 100 e Astro 430.</p></div>
+                <div class="card"><div class="card-icon"><i class="fa-solid fa-layer-group"></i></div><h3>Mapas Topográficos</h3><p>Mapas atualizados com curvas de nível, relevo sombreado, polígonos de lavouras, rios, estradas e cidades.</p></div>
+                <div class="card"><div class="card-icon"><i class="fa-solid fa-headset"></i></div><h3>Suporte Especializado</h3><p>Orientação completa sobre cartão SD e uso na caça.</p></div>
             </div>
         </div>
     </section>
@@ -292,10 +268,10 @@
             <div class="section-title"><h2>Simule sua Cobertura</h2><p>Preencha os dados, clique no mapa ou use a busca. Depois veja a cobertura do seu mapa.</p></div>
             <div class="simulator-container">
                 <div class="simulator-form">
-                    <label for="cliente">👤 Nome</label>
-                    <input type="text" id="cliente" placeholder="Ex.: Seu nome" required>
+                    <label for="cliente">👤 Seu Nome</label>
+                    <input type="text" id="cliente" placeholder="Ex.: João da Silva" required>
                     <label for="digitos">📱 WhatsApp</label>
-                    <input type="text" id="digitos" placeholder="Ex.: (00) 00000-0000" required>
+                    <input type="text" id="digitos" placeholder="Ex.: (91) 98174-3266" required>
                     <label for="deviceModel">📡 Modelo do GPS</label>
                     <select id="deviceModel" required>
                         <option value="">-- Selecione --</option>
@@ -311,22 +287,22 @@
                     <div id="deviceIdGroup">
                         <label for="deviceId">🆔 ID do GPS</label>
                         <input type="text" id="deviceId" placeholder="Ex.: 3354243111">
-                        <small style="color:#666;">Obrigatório para aparelhos Garmins.</small>
+                        <small style="color:#666;">Obrigatório para Garmin.</small>
                     </div>
                     <label for="searchLocation">🔎 Buscar local</label>
                     <div class="search-row">
-                        <input type="text" id="searchLocation" placeholder="Cidade, coordenadas ou link do Google">
+                        <input type="text" id="searchLocation" placeholder="Cidade, coordenadas ou link do Google Maps">
                         <button type="button" id="searchBtn" class="btn" style="background:var(--primary);">🔍</button>
                     </div>
-                    <small style="color:#666;">Ex: Capanema/PA &nbsp;|&nbsp; -00.0000, -00.0000 &nbsp;|&nbsp; 00°00'00"S 00°00'00"W</small>
+                    <small style="color:#666;">Ex: Campinas, SP &nbsp;|&nbsp; -20.4265, -47.2949 &nbsp;|&nbsp; 20°18'30"S 46°11'13"W</small>
                     <label for="estado">🗺️ Estado</label>
-                    <input type="text" id="estado" placeholder="Ex.: Pará">
+                    <input type="text" id="estado" placeholder="Ex.: São Paulo">
                     <label for="cidade">🏙️ Cidade</label>
-                    <input type="text" id="cidade" placeholder="Ex.: Capanema">
+                    <input type="text" id="cidade" placeholder="Ex.: Campinas">
                     <small style="color:#666;">Preenchidos automaticamente ao buscar cidade.</small>
                     <label for="mapType">Tipo de cobertura:</label>
                     <select id="mapType">
-                        <option value="radius">Por raio (Alta Resolução)</option>
+                        <option value="radius">Por raio (personalizada)</option>
                         <option value="estado">Estadual (resolução padrão)</option>
                     </select>
                     <div id="radiusGroup">
@@ -366,14 +342,14 @@
                         <input type="text" id="lng" placeholder="Automático ao buscar/clicar" readonly>
                     </div>
                     <div class="map-toggle">
-                        <button type="button" id="toggleSatellite">🛰️ Mapa de Satélite</button>
+                        <button type="button" id="toggleSatellite">🛰️ Ver satélite</button>
                     </div>
                     <button class="btn" id="drawBtn">📍 Mostrar Cobertura</button>
-                    <button class="btn" id="sendOrderBtn" style="background:#25d366; margin-top:1rem;" disabled>📲 Baixar Arquivo .zip</button>
+                    <button class="btn" id="sendOrderBtn" style="background:#25d366; margin-top:1rem;" disabled>📲 Baixar Arquivo e Enviar Pedido</button>
                     <div class="upload-hint">
-                        📎 <strong>Após baixar o arquivo .zip</strong>, vá até o <a href="#contato" style="color:var(--accent); text-decoration:underline;">Formulário de Contato</a> no final da página e anexe o arquivo baixado para envio.
+                        📎 <strong>Após baixar o arquivo .zip</strong>, vá até o <a href="#contato" style="color:var(--accent); text-decoration:underline;">formulário de contato</a> no final da página e anexe o arquivo para envio.
                     </div>
-                    <p style="margin-top:1rem; font-size:0.9rem; color:#555;"><strong>Como usar:</strong> Use a busca ou clique no mapa. Depois digite o raio e clique em Ver Cobertura. O mapa de satélite exibido é apenas uma simulação.</p>
+                    <p style="margin-top:1rem; font-size:0.9rem; color:#555;"><strong>Como usar:</strong> Use a busca ou clique no mapa. Depois ajuste o raio e veja a cobertura.</p>
                 </div>
                 <div class="map-container"><div id="map"></div></div>
             </div>
@@ -432,8 +408,8 @@
                     <div class="gallery-item"><video controls><source src="https://i.imgur.com/O9eXT6u.mp4" type="video/mp4"></video><div class="gallery-caption">Mapa de Satélite – Alpha 100</div></div>
                     <div class="gallery-item"><video controls><source src="https://i.imgur.com/x5p38xF.mp4" type="video/mp4"></video><div class="gallery-caption">Astro 320 com BirdsEye ativado</div></div>
                     <div class="gallery-item"><video controls><source src="https://i.imgur.com/CKYmSFm.mp4" type="video/mp4"></video><div class="gallery-caption">Mapa de Alta qualidade - Alpha 200 e 300</div></div>
-                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/Eb046QO.mp4" type="video/mp4"></video><div class="gallery-caption">Mapa topográfico no Alpha 100</div></div>
-                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/w82UdyB.mp4" type="video/mp4"></video><div class="gallery-caption">Astro 320 com BirdsEye ativado</div></div>
+                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/felo0BT.mp4" type="video/mp4"></video><div class="gallery-caption">Astro 320 lisinho com BirdsEye ativado</div></div>
+                    <div class="gallery-item"><video controls><source src="https://i.imgur.com/x5p38xF.mp4" type="video/mp4"></video><div class="gallery-caption">Astro 320 com BirdsEye ativado</div></div>
                 </div>
                 <div class="gallery-nav">
                     <button id="prevBtn"><i class="fa-solid fa-chevron-left"></i></button>
@@ -446,7 +422,7 @@
 
     <section id="contato">
         <div class="container">
-            <div class="section-title"><h2>Formulário de Contato</h2><p>Preencha o formulário e anexe o arquivo .zip baixado no simulador.</p></div>
+            <div class="section-title"><h2>Solicite seu Mapa</h2><p>Preencha o formulário e anexe o arquivo .zip baixado no simulador.</p></div>
             <div class="contact-wrapper">
                 <div class="contact-info">
                     <p><i class="fa-brands fa-whatsapp"></i> <strong>WhatsApp:</strong> (91) 98174-3266</p>
@@ -457,7 +433,7 @@
                     <div class="form-group"><input type="text" name="Nome" placeholder="Seu nome" required></div>
                     <div class="form-group"><input type="email" name="E-mail" placeholder="Seu e-mail" required></div>
                     <div class="form-group"><input type="tel" name="Telefone" placeholder="WhatsApp com DDD"></div>
-                    <div class="form-group"><textarea name="Mensagem" placeholder="Descreva o que você precisa... Envie O ID do seu aparelho. E Anexar o GarminDevice." required></textarea></div>
+                    <div class="form-group"><textarea name="Mensagem" placeholder="Descreva seu aparelho, região, raio..." required></textarea></div>
                     <div class="form-group">
                         <label for="anexo" style="display:block; margin-bottom:0.3rem; color:#ccc;">📎 Anexar arquivo .zip</label>
                         <input type="file" id="anexo" name="anexo" accept=".zip">
@@ -482,7 +458,6 @@
             const MAX_CELL_KM = 40;
             const sideTotalKm = radiusKm * 2;
             const cellsPerSide = Math.ceil(sideTotalKm / MAX_CELL_KM);
-            const cellSizeKm = sideTotalKm / cellsPerSide;
             const mPerDegLat = 111320;
             const latRad = centerLat * Math.PI / 180;
             const mPerDegLon = 111320 * Math.cos(latRad);
