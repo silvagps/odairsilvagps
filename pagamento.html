@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento | Odair Silva GPS</title>
-    <meta name="description" content="Finalize o pagamento do seu mapa para GPS Garmin e Eseek.">
+    <meta name="robots" content="noindex, follow">
     <link rel="icon" type="image/png" href="https://i.imgur.com/QMO8U0U.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #2e4a1f;
@@ -17,329 +16,232 @@
             --dark: #1e1e1a;
             --bg-light: #f5efe0;
             --white: #ffffff;
-            --radius: 10px;
-            --shadow: 0 6px 20px rgba(0,0,0,0.2);
+            --radius: 12px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Roboto', sans-serif;
             background: #1c1c16;
             color: #ddd;
-            line-height: 1.7;
-            padding: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             min-height: 100vh;
+            padding: 20px;
         }
-        .container {
-            width: 100%;
-            max-width: 650px;
-            margin: 0 auto;
-        }
-        .logo-area {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .logo-area .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent);
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-        .logo-area .logo img { height: 50px; width: auto; border-radius: 6px; }
-        .logo-area p { color: #aaa; font-size: 1rem; }
-
         .card {
-            background: var(--dark);
+            max-width: 500px;
+            width: 100%;
+            background: var(--bg-light);
             border-radius: var(--radius);
             padding: 2rem;
-            box-shadow: var(--shadow);
+            text-align: center;
+            color: #2e2e2e;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
         }
-
-        .tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .tabs button {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            background: #2a2a22;
-            color: #aaa;
+        .card h2 {
             font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .card p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: #444;
+        }
+        .valor-destaque {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 1rem 0;
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+        }
+        .tab-btn {
+            background: #e0d7c6;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
             font-weight: 700;
+            font-family: 'Oswald', sans-serif;
             cursor: pointer;
             transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: var(--primary);
+            font-size: 1rem;
         }
-        .tabs button.active {
+        .tab-btn.active {
             background: var(--accent);
             color: #1e1e1a;
         }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        .pix-section {
-            text-align: center;
+        .tab-content {
+            display: none;
         }
-        .pix-section .qr-code {
-            background: white;
-            display: inline-block;
-            padding: 15px;
-            border-radius: 12px;
-            margin: 1rem 0;
+        .tab-content.active {
+            display: block;
         }
-        .pix-section .qr-code img {
-            width: 200px;
-            height: 200px;
+        #pix-qr {
+            margin: 1rem auto;
+            display: block;
         }
         .pix-key {
-            background: #2a2a22;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 1rem 0;
-            font-size: 0.9rem;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 10px;
+            word-break: break-all;
+            font-family: monospace;
+            margin: 0.5rem 0;
+            text-align: center;
         }
-        .pix-key button {
+        .btn-copy {
             background: var(--accent);
             color: #1e1e1a;
             border: none;
-            padding: 0.4rem 1rem;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 700;
+            margin-top: 0.5rem;
+            transition: 0.3s;
         }
-
-        .card-section {
-            text-align: center;
-        }
-        .card-section select {
-            width: 100%;
-            padding: 0.8rem;
-            background: #2a2a22;
-            border: 1px solid #444;
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-            margin: 1rem 0;
-        }
-        .card-section .btn-mercado-pago {
+        .btn-copy:hover { background: #a5621e; }
+        .btn-card {
             display: inline-block;
-            width: 100%;
-            padding: 1rem;
-            background: #00a650;
+            background: #007bff;
             color: white;
-            border: none;
-            border-radius: 8px;
+            padding: 1rem 2rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
             font-family: 'Oswald', sans-serif;
             font-size: 1.2rem;
-            font-weight: 700;
-            text-transform: uppercase;
+            margin: 0.5rem;
+            transition: 0.3s;
+            border: none;
             cursor: pointer;
-            letter-spacing: 1px;
-            text-align: center;
-            text-decoration: none;
-            margin-top: 0.5rem;
         }
-        .card-section .btn-mercado-pago:hover { background: #008f45; }
-        .card-section .valor-parcelado {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.3rem;
-            color: var(--accent);
-            margin: 0.5rem 0;
+        .btn-card:hover { background: #0056b3; }
+        .note {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #666;
         }
-
-        .valor-display {
-            background: var(--accent);
-            color: #1e1e1a;
-            text-align: center;
-            padding: 1rem;
-            border-radius: 8px;
-            font-family: 'Oswald', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
         .back-link {
             display: inline-block;
-            margin-bottom: 1rem;
+            margin-top: 1.5rem;
             color: var(--accent);
             font-weight: 700;
-        }
-
-        @media (max-width: 500px) {
-            .card-row { flex-direction: column; }
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo-area">
-            <div class="logo">
-                <img src="https://i.imgur.com/QMO8U0U.png" alt="Logo Odair Silva GPS">
-                Odair Silva GPS
-            </div>
-            <p>Finalizar Pagamento</p>
+    <div class="card">
+        <h2>💲 Pagamento</h2>
+        <p>Pedido enviado! Escolha a forma de pagamento.</p>
+        <div id="valor-container" class="valor-destaque">R$ --</div>
+
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="showTab('pix')">PIX</button>
+            <button class="tab-btn" onclick="showTab('cartao')">Cartão de Crédito</button>
         </div>
-        <a href="javascript:history.back()" class="back-link">&larr; Voltar</a>
 
-        <div class="card">
-            <div class="valor-display" id="valorDisplay">R$ --</div>
-
-            <div class="tabs">
-                <button id="tabPix" class="active">PIX</button>
-                <button id="tabCartao">Cartão de Crédito</button>
-            </div>
-
-            <!-- ABA PIX (mantida igual) -->
-            <div id="contentPix" class="tab-content active">
-                <div class="pix-section">
-                    <p style="margin-bottom:1rem;">Escaneie o QR Code ou copie a chave PIX abaixo:</p>
-                    <div class="qr-code">
-                        <img id="qrImage" src="" alt="QR Code PIX">
-                    </div>
-                    <div class="pix-key">
-                        <span id="pixKeyText">91981743266</span>
-                        <button onclick="copiarChave()">📋 Copiar</button>
-                    </div>
-                    <p style="font-size:0.85rem; color:#aaa;">Banco: Inter | Titular: J. Odair da S.</p>
-                    <p style="font-size:0.85rem; color:#aaa;">Após o pagamento, envie o comprovante pelo WhatsApp.</p>
-                    <a href="https://wa.me/5591981743266?text=Olá%20Odair!%20Realizei%20o%20pagamento%20e%20segue%20comprovante." target="_blank" style="display:inline-block; background:#25d366; color:white; padding:0.8rem 2rem; border-radius:8px; text-decoration:none; font-weight:700; margin-top:1rem;">
-                        📱 Enviar Comprovante
-                    </a>
-                </div>
-            </div>
-
-            <!-- ABA CARTÃO DE CRÉDITO (MERCADO PAGO) -->
-            <div id="contentCartao" class="tab-content">
-                <div class="card-section">
-                    <p style="margin-bottom:1rem;">Escolha a forma de pagamento com cartão:</p>
-                    <select id="parcelas" onchange="atualizarValorParcelado()">
-                        <option value="1">1x à vista (sem juros)</option>
-                        <option value="2">2x (acréscimo de R$ 20,00)</option>
-                    </select>
-                    <div class="valor-parcelado" id="valorParcelado">Total: R$ --</div>
-                    <a href="#" id="linkMercadoPago" class="btn-mercado-pago" target="_blank">
-                        <i class="fa-solid fa-credit-card"></i> Pagar com Mercado Pago
-                    </a>
-                    <p style="font-size:0.8rem; color:#aaa; margin-top:1rem;">Você será redirecionado ao checkout seguro do Mercado Pago.</p>
-                </div>
-            </div>
+        <!-- ABA PIX -->
+        <div id="tab-pix" class="tab-content active">
+            <img id="pix-qr" src="" alt="QR Code PIX" width="200" height="200">
+            <div class="pix-key" id="pixKey">91981743266</div>
+            <button class="btn-copy" onclick="copyPix()">📋 Copiar chave PIX</button>
+            <p class="note">Após o pagamento, envie o comprovante pelo WhatsApp.</p>
         </div>
+
+        <!-- ABA CARTÃO -->
+        <div id="tab-cartao" class="tab-content">
+            <p><strong>À vista (sem acréscimo):</strong></p>
+            <a id="btn-a-vista" href="#" class="btn-card" target="_blank">Pagar à vista</a>
+            <p style="margin-top:1rem;"><strong>2x sem juros (acréscimo de R$20):</strong></p>
+            <a id="btn-parcelado" href="#" class="btn-card" target="_blank">Parcelar 2x</a>
+            <p class="note">Você será redirecionado para o ambiente seguro do Mercado Pago.</p>
+        </div>
+
+        <a href="index.html" class="back-link">&larr; Voltar ao site</a>
     </div>
 
     <script>
-        // ---------- RECUPERAR VALOR DO PEDIDO ----------
-        const valorStr = localStorage.getItem('valorPedido') || '0';
-        const nomeCliente = localStorage.getItem('nomeCliente') || '';
-        const valorBase = parseFloat(valorStr) || 0;
-        
-        document.getElementById('valorDisplay').textContent = valorBase > 0 
-            ? `R$ ${valorBase.toFixed(2).replace('.', ',')}` 
-            : 'R$ --';
+        // Obter valor da URL (ex: pagamento.html?valor=350.00)
+        const params = new URLSearchParams(window.location.search);
+        const valor = params.get('valor');
 
-        // ---------- GERAR QR CODE PIX ----------
+        // Exibir valor formatado
+        const valorContainer = document.getElementById('valor-container');
+        if (valor) {
+            valorContainer.textContent = `R$ ${parseFloat(valor).toFixed(2).replace('.', ',')}`;
+        } else {
+            valorContainer.textContent = 'Valor não informado';
+        }
+
+        // Gerar QR Code PIX (usando chave fixa e valor recebido)
+        function gerarQRCodePix(valor) {
+            const chave = '+5591981743266';
+            const nome = 'JOSE ODAIR DA SILVA';
+            const cidade = 'CAPANEMA';
+            const valorStr = valor.toFixed(2);
+            const tamanhoValor = valorStr.length.toString().padStart(2, '0');
+            const base = '00020101021126360014br.gov.bcb.pix0114' + chave + '5204000053039865802BR5919' + nome + '6008' + cidade + '62070503***';
+            const comValor = base + '54' + tamanhoValor + valorStr;
+            const crc = crc16CCITT(comValor + '6304');
+            const pixCode = comValor + '6304' + crc;
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
+            document.getElementById('pix-qr').src = qrUrl;
+        }
+
         function crc16CCITT(data) {
             let crc = 0xFFFF;
             for (let i = 0; i < data.length; i++) {
                 crc ^= data.charCodeAt(i) << 8;
-                for (let j = 0; j < 8; j++) crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+                for (let j = 0; j < 8; j++) {
+                    crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1;
+                }
             }
             return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
         }
 
-        function gerarPixCode(valorPix) {
-            const chave = '+5591981743266';
-            const nome = 'JOSE ODAIR DA SILVA';
-            const cidade = 'CAPANEMA';
-            const valorStr = valorPix.toFixed(2);
-            const base = '00020101021126360014br.gov.bcb.pix0114' + chave + '5204000053039865802BR5919' + nome + '6008' + cidade + '62070503***';
-            const comValor = base + '54' + valorStr.length.toString().padStart(2,'0') + valorStr;
-            return comValor + '6304' + crc16CCITT(comValor + '6304');
+        if (valor) {
+            gerarQRCodePix(parseFloat(valor));
         }
 
-        if (valorBase > 0) {
-            const pixCode = gerarPixCode(valorBase);
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
-            document.getElementById('qrImage').src = qrUrl;
-            document.getElementById('pixKeyText').textContent = '+5591981743266';
+        // Configurar links do Mercado Pago
+        const linkBase = 'https://link.mercadopago.com.br/odairsilvagps';
+        const btnAVista = document.getElementById('btn-a-vista');
+        const btnParcelado = document.getElementById('btn-parcelado');
+
+        if (valor) {
+            // Mercado Pago aceita parâmetro 'amount' no link de checkout
+            const valorAVista = parseFloat(valor);
+            const valorParcelado = valorAVista + 20;
+            btnAVista.href = `${linkBase}?amount=${valorAVista.toFixed(2)}`;
+            btnParcelado.href = `${linkBase}?amount=${valorParcelado.toFixed(2)}`;
         } else {
-            document.getElementById('qrImage').src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" fill="%23eee"/><text x="50" y="100" font-size="12" fill="%23999">Informe o valor</text></svg>';
+            btnAVista.href = linkBase;
+            btnParcelado.href = linkBase;
         }
 
-        // ---------- COPIAR CHAVE PIX ----------
-        function copiarChave() {
-            navigator.clipboard.writeText('+5591981743266').then(() => {
-                alert('Chave PIX copiada!');
-            });
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            event.target.classList.add('active');
         }
 
-        // ---------- ABAS ----------
-        const tabPix = document.getElementById('tabPix');
-        const tabCartao = document.getElementById('tabCartao');
-        const contentPix = document.getElementById('contentPix');
-        const contentCartao = document.getElementById('contentCartao');
-
-        tabPix.addEventListener('click', () => {
-            tabPix.classList.add('active');
-            tabCartao.classList.remove('active');
-            contentPix.classList.add('active');
-            contentCartao.classList.remove('active');
-        });
-
-        tabCartao.addEventListener('click', () => {
-            tabCartao.classList.add('active');
-            tabPix.classList.remove('active');
-            contentCartao.classList.add('active');
-            contentPix.classList.remove('active');
-            atualizarValorParcelado(); // para exibir o valor logo de cara
-        });
-
-        // ---------- ATUALIZAR VALOR PARCELADO E LINK MERCADO PAGO ----------
-        function atualizarValorParcelado() {
-            const parcelas = parseInt(document.getElementById('parcelas').value);
-            let valorFinal = valorBase;
-            if (parcelas === 2) {
-                valorFinal = valorBase + 20.0;
-            }
-            const valorFormatado = valorFinal.toFixed(2).replace('.', ',');
-            const valorParceladoEl = document.getElementById('valorParcelado');
-            const linkEl = document.getElementById('linkMercadoPago');
-
-            if (parcelas === 1) {
-                valorParceladoEl.textContent = `Total à vista: R$ ${valorFormatado}`;
-            } else {
-                valorParceladoEl.textContent = `Total em 2x: R$ ${valorFormatado}`;
-            }
-
-            // Monta o link do Mercado Pago com o valor (se o checkout permitir)
-            const baseLink = 'https://link.mercadopago.com.br/odairsilvagps';
-            const linkComValor = `${baseLink}?amount=${valorFinal.toFixed(2)}`;
-            linkEl.href = linkComValor;
-            linkEl.textContent = `Pagar R$ ${valorFinal.toFixed(2).replace('.', ',')} com Mercado Pago`;
+        function copyPix() {
+            const key = document.getElementById('pixKey').innerText;
+            navigator.clipboard.writeText(key);
+            alert('Chave PIX copiada!');
         }
-
-        // Inicializa o valor parcelado ao carregar
-        atualizarValorParcelado();
     </script>
 </body>
 </html>
