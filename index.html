@@ -216,7 +216,6 @@
                     <li><a href="#cartao-sd">Cartão de Memória</a></li>
                     <li><a href="#galeria">Galeria</a></li>
                     <li><a href="blog.html">Blog</a></li>
-                    <!-- Link atualizado para página separada -->
                     <li><a href="baixar-mapa.html">Baixar Mapa</a></li>
                     <li><a href="#contato">Contato</a></li>
                 </ul>
@@ -427,15 +426,17 @@
                     <p><i class="fa-solid fa-envelope"></i> <strong>E-mail:</strong> odairdrx@gmail.com</p>
                     <p style="margin-top:2rem; font-size:0.9rem; color:#aaa;">📎 <strong>Envie o arquivo .zip</strong> que você baixou no simulador. Assim consigo processar seu pedido com mais agilidade.</p>
                 </div>
-                <form class="contact-form" name="contato" method="POST" enctype="multipart/form-data" netlify action="pagamento.html">
-                    <input type="hidden" name="form-name" value="contato">
-                    <div class="form-group"><input type="text" name="Nome" placeholder="Seu nome" required></div>
-                    <div class="form-group"><input type="email" name="E-mail" placeholder="Seu e-mail" required></div>
-                    <div class="form-group"><input type="tel" name="Telefone" placeholder="WhatsApp com DDD"></div>
-                    <div class="form-group"><textarea name="Mensagem" placeholder="Descreva seu aparelho, região, raio..." required></textarea></div>
+                <form class="contact-form" method="POST" enctype="multipart/form-data" action="https://forminit.com/f/4zh1jxvt4oo">
+                    <input type="hidden" name="_gotcha" style="display:none !important">
+                    <input type="hidden" name="_redirect" value="https://silvagps.github.io/odairsilvagps/pagamento.html">
+                    
+                    <div class="form-group"><input type="text" name="fi-sender-fullName" placeholder="Seu nome" required></div>
+                    <div class="form-group"><input type="email" name="fi-sender-email" placeholder="Seu e-mail" required></div>
+                    <div class="form-group"><input type="tel" name="fi-text-phone" placeholder="WhatsApp com DDD"></div>
+                    <div class="form-group"><textarea name="fi-text-message" placeholder="Descreva seu aparelho, região, raio..." required></textarea></div>
                     <div class="form-group">
                         <label for="anexo" style="display:block; margin-bottom:0.3rem; color:#ccc;">📎 Anexar arquivo .zip</label>
-                        <input type="file" id="anexo" name="anexo" accept=".zip">
+                        <input type="file" id="anexo" name="fi-file-anexo" accept=".zip">
                     </div>
                     <button type="submit">Enviar agora</button>
                 </form>
@@ -817,8 +818,6 @@ ${tracksXml}
                     folder.file(`Recibo_${sanitizeFilename(cliente)}_${digitos}.pdf`, pdfBlob);
                     const zipBlob = await zip.generateAsync({type:'blob'});
                     saveAs(zipBlob, `${folderName}.zip`);
-                    localStorage.setItem('valorPedido', valorTotal.toFixed(2));
-                    localStorage.setItem('nomeCliente', cliente);
                     alert('✅ Arquivo baixado! Vá até o formulário de contato e anexe o .zip. Após enviar, você será redirecionado para o pagamento.');
                 } catch(e) { alert('Erro: ' + e.message); }
             });
