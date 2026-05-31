@@ -216,6 +216,8 @@
                     <li><a href="#cartao-sd">Cartão de Memória</a></li>
                     <li><a href="#galeria">Galeria</a></li>
                     <li><a href="blog.html">Blog</a></li>
+                    <!-- Link atualizado para página separada -->
+                    <li><a href="baixar-mapa.html">Baixar Mapa</a></li>
                     <li><a href="#contato">Contato</a></li>
                 </ul>
             </nav>
@@ -312,15 +314,11 @@
                     </div>
 
                     <div id="traducaoDiv" class="traducao-box">
-                        <label>
-                            <input type="checkbox" id="traducao"> Deseja traduzir idioma do aparelho? (+ R$ 50,00)
-                        </label>
+                        <label><input type="checkbox" id="traducao"> Deseja traduzir idioma do aparelho? (+ R$ 50,00)</label>
                     </div>
 
                     <div id="descontoDiv" class="desconto-box">
-                        <label>
-                            <input type="checkbox" id="desconto"> Desejo desconto de R$ 50,00 no valor final
-                        </label>
+                        <label><input type="checkbox" id="desconto"> Desejo desconto de R$ 50,00 no valor final</label>
                         <div id="valorFinalInfo"></div>
                     </div>
 
@@ -429,8 +427,7 @@
                     <p><i class="fa-solid fa-envelope"></i> <strong>E-mail:</strong> odairdrx@gmail.com</p>
                     <p style="margin-top:2rem; font-size:0.9rem; color:#aaa;">📎 <strong>Envie o arquivo .zip</strong> que você baixou no simulador. Assim consigo processar seu pedido com mais agilidade.</p>
                 </div>
-                <!-- FORMULÁRIO ALTERADO PARA NETLIFY FORMS -->
-                <form class="contact-form" name="contato" method="POST" enctype="multipart/form-data" netlify>
+                <form class="contact-form" name="contato" method="POST" enctype="multipart/form-data" netlify action="pagamento.html">
                     <input type="hidden" name="form-name" value="contato">
                     <div class="form-group"><input type="text" name="Nome" placeholder="Seu nome" required></div>
                     <div class="form-group"><input type="email" name="E-mail" placeholder="Seu e-mail" required></div>
@@ -820,7 +817,9 @@ ${tracksXml}
                     folder.file(`Recibo_${sanitizeFilename(cliente)}_${digitos}.pdf`, pdfBlob);
                     const zipBlob = await zip.generateAsync({type:'blob'});
                     saveAs(zipBlob, `${folderName}.zip`);
-                    alert('✅ Arquivo baixado! Vá até o final da página e anexe o .zip no formulário de contato.');
+                    localStorage.setItem('valorPedido', valorTotal.toFixed(2));
+                    localStorage.setItem('nomeCliente', cliente);
+                    alert('✅ Arquivo baixado! Vá até o formulário de contato e anexe o .zip. Após enviar, você será redirecionado para o pagamento.');
                 } catch(e) { alert('Erro: ' + e.message); }
             });
 
