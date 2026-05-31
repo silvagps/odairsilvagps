@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baixar Meu Mapa | Odair Silva GPS</title>
+    <meta name="description" content="Acesse o download do seu mapa para GPS Garmin e Eseek usando o ID do aparelho.">
+    <link rel="icon" type="image/png" href="https://i.imgur.com/QMO8U0U.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2e4a1f;
+            --accent: #c47a2b;
+            --dark: #1e1e1a;
+            --bg-light: #f5efe0;
+            --white: #ffffff;
+            --radius: 10px;
+            --shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #1c1c16;
+            color: #ddd;
+            line-height: 1.7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .logo-area {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .logo-area .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .logo-area .logo img { height: 50px; width: auto; border-radius: 6px; }
+        .logo-area p { color: #aaa; font-size: 1rem; }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .download-card {
+            background: var(--dark);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        .download-card h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .download-card input {
+            width: 100%;
+            padding: 0.9rem;
+            background: #2a2a22;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 1rem 0;
+            letter-spacing: 2px;
+        }
+        .download-card button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: #1e1e1a;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+        .download-card button:hover { background: #a5621e; }
+
+        .result-box {
+            margin-top: 1.5rem;
+            display: none;
+        }
+        .result-box.success {
+            display: block;
+            background: rgba(0,191,99,0.1);
+            border: 1px solid #00bf63;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        .result-box.error {
+            display: block;
+            background: rgba(255,50,50,0.1);
+            border: 1px solid #ff4d6d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            color: #ffc2cc;
+        }
+        .result-box a {
+            display: inline-block;
+            margin-top: 0.8rem;
+            background: var(--accent);
+            color: #1e1e1a;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .result-box a:hover { background: #a5621e; }
+        .result-box p { margin: 0.5rem 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-area">
+            <div class="logo">
+                <img src="https://i.imgur.com/QMO8U0U.png" alt="Logo Odair Silva GPS">
+                Odair Silva GPS
+            </div>
+            <p>Baixar Meu Mapa</p>
+        </div>
+        <a href="index.html" class="back-link">&larr; Voltar ao site</a>
+
+        <div class="download-card">
+            <h2>🔒 Acesso Restrito</h2>
+            <p style="color:#aaa; margin-bottom:1rem;">Insira o ID do seu GPS para acessar o link de download do seu mapa.</p>
+            <input type="text" id="deviceIdInput" placeholder="Ex.: 3354243111">
+            <button onclick="buscarMapa()">🔍 Buscar Mapa</button>
+
+            <div id="resultSuccess" class="result-box success">
+                <p style="color:#00bf63; font-weight:700;">✅ Mapa encontrado!</p>
+                <p id="mapaInfo" style="color:#aaa; font-size:0.9rem;"></p>
+                <a href="#" id="linkDownload" target="_blank">📥 Baixar Meu Mapa</a>
+                <p style="font-size:0.8rem; color:#aaa; margin-top:0.8rem;">Se houver dificuldades, entre em contato pelo WhatsApp.</p>
+            </div>
+
+            <div id="resultError" class="result-box error">
+                <p>❌ ID não encontrado.</p>
+                <p style="font-size:0.9rem;">Verifique se digitou corretamente. Se contratou o serviço recentemente, seu mapa estará disponível em breve.</p>
+                <a href="https://wa.me/5591981743266?text=Olá%20Odair!%20Preciso%20de%20ajuda%20para%20baixar%20meu%20mapa." target="_blank" style="display:inline-block; margin-top:0.8rem; background:#25d366; color:white; padding:0.6rem 1.5rem; border-radius:8px; text-decoration:none; font-weight:700;">
+                    📱 Falar no WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ---------- BANCO DE MAPAS (ID -> LINK DO GOOGLE DRIVE) ----------
+        // Adicione aqui os IDs e respectivos links de download.
+        // O link do Google Drive deve ser configurado como "Qualquer pessoa com o link pode visualizar".
+        const bancoMapas = {
+            '3354243111': 'https://drive.google.com/SEU_LINK_AQUI',
+            '1234567890': 'https://drive.google.com/OUTRO_LINK',
+            // Continue adicionando...
+        };
+
+        function buscarMapa() {
+            const id = document.getElementById('deviceIdInput').value.trim();
+            const successDiv = document.getElementById('resultSuccess');
+            const errorDiv = document.getElementById('resultError');
+            const linkDownload = document.getElementById('linkDownload');
+            const mapaInfo = document.getElementById('mapaInfo');
+
+            // Esconde resultados anteriores
+            successDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+
+            if (!id) {
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (bancoMapas[id]) {
+                linkDownload.href = bancoMapas[id];
+                mapaInfo.textContent = `ID: ${id}`;
+                successDiv.style.display = 'block';
+            } else {
+                errorDiv.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
