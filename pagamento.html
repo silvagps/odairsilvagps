@@ -136,7 +136,6 @@
             font-weight: 700;
             text-decoration: none;
         }
-        /* WhatsApp float */
         .whatsapp-float {
             position: fixed;
             bottom: 30px;
@@ -181,13 +180,11 @@
         <a href="index.html" class="back-link">&larr; Voltar ao site</a>
     </div>
 
-    <!-- WhatsApp flutuante -->
     <a href="https://wa.me/5591981743266?text=Olá%20Odair,%20acabei%20de%20realizar%20o%20pagamento%20do%20serviço." target="_blank" class="whatsapp-float" title="Enviar comprovante">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
     <script>
-        // Preenche o campo automaticamente com o valor armazenado no localStorage (se existir)
         function preencherValorPedido() {
             const valorSalvo = localStorage.getItem('valorPedido');
             if (valorSalvo) {
@@ -243,7 +240,6 @@
             alert('Chave PIX copiada!');
         }
 
-        // Tenta preencher automaticamente ao carregar a página (se o valor já estiver no localStorage)
         window.addEventListener('load', function() {
             const valorSalvo = localStorage.getItem('valorPedido');
             if (valorSalvo) {
