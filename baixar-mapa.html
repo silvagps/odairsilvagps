@@ -19,6 +19,7 @@
             --white: #ffffff;
             --radius: 10px;
             --shadow: 0 6px 20px rgba(0,0,0,0.2);
+            --cyan: #00bf63;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -34,7 +35,7 @@
         }
         .container {
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
             margin: 0 auto;
         }
         .logo-area {
@@ -56,12 +57,32 @@
         .logo-area .logo img { height: 50px; width: auto; border-radius: 6px; }
         .logo-area p { color: #aaa; font-size: 1rem; }
 
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            border: 2px solid var(--accent);
+            border-radius: 6px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .btn-back:hover {
+            background: var(--accent);
+            color: #1e1e1a;
+        }
+
         .download-card {
             background: var(--dark);
             border-radius: var(--radius);
             padding: 2rem;
             box-shadow: var(--shadow);
             text-align: center;
+            border: 2px solid var(--cyan);
         }
         .download-card h2 {
             color: var(--accent);
@@ -72,7 +93,7 @@
             width: 100%;
             padding: 0.9rem;
             background: #2a2a22;
-            border: 1px solid #444;
+            border: 2px solid var(--cyan);
             border-radius: 8px;
             color: white;
             font-size: 1.1rem;
@@ -134,23 +155,25 @@
         .result-box a:hover { background: #a5621e; }
         .result-box p { margin: 0.5rem 0; }
 
-        .btn-back {
-            display: inline-flex;
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--accent);
-            font-weight: 700;
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            padding: 0.5rem 1.2rem;
-            border: 2px solid var(--accent);
-            border-radius: 6px;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 8px 20px rgba(37,211,102,0.5);
+            z-index: 999;
             transition: 0.3s;
+            text-decoration: none;
         }
-        .btn-back:hover {
-            background: var(--accent);
-            color: #1e1e1a;
-        }
+        .whatsapp-float:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -162,16 +185,22 @@
             </div>
             <p>Baixar Meu Mapa</p>
         </div>
-        <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao site</a>
+        <a href="index.html" class="btn-back"><i class="fa-solid fa-house"></i> Voltar ao site</a>
 
         <div class="download-card">
             <h2>🔒 Acesso Restrito</h2>
             <p style="color:#aaa; margin-bottom:1rem;">Selecione o modelo do seu aparelho e informe os dados abaixo para baixar seu mapa.</p>
 
-            <!-- Seletor de modelo -->
+            <!-- Lista de aparelhos -->
             <select id="modeloSelect" onchange="atualizarCampos()">
                 <option value="">-- Selecione o modelo --</option>
-                <option value="garmin">Garmin (Alpha, Astro)</option>
+                <option value="alpha100">Alpha 100</option>
+                <option value="alpha200">Alpha 200</option>
+                <option value="alpha200i">Alpha 200i</option>
+                <option value="alpha300">Alpha 300</option>
+                <option value="alpha300i">Alpha 300i</option>
+                <option value="astro320">Astro 320</option>
+                <option value="astro430">Astro 430</option>
                 <option value="eseek">eSEEk</option>
             </select>
 
@@ -204,16 +233,17 @@
         </div>
     </div>
 
+    <!-- WhatsApp flutuante -->
+    <a href="https://wa.me/5591981743266?text=Olá%20Odair!%20Preciso%20de%20ajuda%20com%20meu%20mapa." target="_blank" class="whatsapp-float" title="Falar no WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
     <script>
         // ---------- BANCO DE MAPAS (CHAVE -> LINK DE DOWNLOAD DIRETO) ----------
-        // Chave pode ser o ID do Garmin (ex.: "3354243111") ou o número WhatsApp do eSEEk (ex.: "5591981743266").
-        // Para obter o link direto do Google Drive:
-        // 1. No Google Drive, clique com botão direito no arquivo -> Compartilhar -> "Qualquer pessoa com o link pode visualizar".
-        // 2. Copie o link (ex: https://drive.google.com/file/d/FILE_ID/view?usp=sharing).
-        // 3. Extraia o FILE_ID (a parte entre /d/ e /view).
-        // 4. Monte o link direto: https://drive.google.com/uc?export=download&id=FILE_ID
+        // Chave pode ser o ID do Garmin ou o número WhatsApp do eSEEk (apenas dígitos).
+        // Links no formato: https://drive.google.com/uc?export=download&id=FILE_ID
         const bancoMapas = {
-            // Garmin (ID)        
+            // Garmin (ID)            
             '3629338055': 'https://drive.google.com/uc?export=download&id=12NtPvauTIorRQlWDUTcQHdq7hsWLPkYy',
             '3420371933': 'https://drive.google.com/uc?export=download&id=1Wp92z29qIGZNTcFWB3u8uu1E7JaAWHmh',
             // eSEEk (WhatsApp)
@@ -228,14 +258,15 @@
             const idInput = document.getElementById('deviceIdInput');
             const whatsappInput = document.getElementById('whatsappInput');
 
-            if (modelo === 'garmin') {
-                grupoGarmin.style.display = 'block';
-                grupoEseek.style.display = 'none';
-                whatsappInput.value = '';
-            } else if (modelo === 'eseek') {
+            // Modelos Garmin: alpha e astro; eSEEk é o único não Garmin
+            if (modelo === 'eseek') {
                 grupoGarmin.style.display = 'none';
                 grupoEseek.style.display = 'block';
                 idInput.value = '';
+            } else if (modelo) {
+                grupoGarmin.style.display = 'block';
+                grupoEseek.style.display = 'none';
+                whatsappInput.value = '';
             } else {
                 grupoGarmin.style.display = 'none';
                 grupoEseek.style.display = 'none';
@@ -265,28 +296,27 @@
             }
 
             let chave = '';
-            if (modelo === 'garmin') {
-                if (!idInput) {
-                    alert('Informe o ID do GPS Garmin.');
-                    return;
-                }
-                chave = idInput;
-            } else if (modelo === 'eseek') {
+            if (modelo === 'eseek') {
                 if (!whatsappInput) {
                     alert('Informe o número de WhatsApp com DDD.');
                     return;
                 }
-                // Remove caracteres não numéricos para padronizar a chave
                 chave = whatsappInput.replace(/\D/g, '');
                 if (chave.length < 11) {
                     alert('Número de WhatsApp inválido. Use o formato: 5591981743266');
                     return;
                 }
+            } else {
+                if (!idInput) {
+                    alert('Informe o ID do GPS Garmin.');
+                    return;
+                }
+                chave = idInput;
             }
 
             if (bancoMapas[chave]) {
                 linkDownload.href = bancoMapas[chave];
-                mapaInfo.textContent = `Chave: ${chave} (${modelo === 'garmin' ? 'Garmin' : 'eSEEk'})`;
+                mapaInfo.textContent = `Chave: ${chave} (${modelo === 'eseek' ? 'eSEEk' : 'Garmin'})`;
                 successDiv.style.display = 'block';
             } else {
                 errorDiv.style.display = 'block';
