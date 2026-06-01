@@ -426,10 +426,11 @@
                     <p><i class="fa-solid fa-envelope"></i> <strong>E-mail:</strong> odairdrx@gmail.com</p>
                     <p style="margin-top:2rem; font-size:0.9rem; color:#aaa;">📎 <strong>Envie o arquivo .zip</strong> que você baixou no simulador. Assim consigo processar seu pedido com mais agilidade.</p>
                 </div>
-                <form class="contact-form" method="POST" enctype="multipart/form-data" action="https://forminit.com/f/4zh1jxvt4oo">
+                <!-- FORMULÁRIO COM REDIRECIONAMENTO DINÂMICO -->
+                <form class="contact-form" method="POST" enctype="multipart/form-data" action="https://forminit.com/f/4zh1jxvt4oo" id="formContato">
                     <input type="hidden" name="_gotcha" style="display:none !important">
-                    <input type="hidden" name="_redirect" value="https://silvagps.github.io/odairsilvagps/pagamento.html">
-                    
+                    <!-- Valor padrão, será atualizado via JS -->
+                    <input type="hidden" name="_redirect" value="pagamento.html?valor=0" id="redirectField">
                     <div class="form-group"><input type="text" name="fi-sender-fullName" placeholder="Seu nome" required></div>
                     <div class="form-group"><input type="email" name="fi-sender-email" placeholder="Seu e-mail" required></div>
                     <div class="form-group"><input type="tel" name="fi-text-phone" placeholder="WhatsApp com DDD"></div>
@@ -618,6 +619,16 @@ ${tracksXml}
 
         // ---------- MAPA, MENU, GALERIA E PREÇOS ----------
         document.addEventListener('DOMContentLoaded', function() {
+            // Atualizar o campo _redirect com base no localStorage ao carregar a página
+            function atualizarRedirect() {
+                const valor = localStorage.getItem('valorPedido');
+                const redirectField = document.getElementById('redirectField');
+                if (valor && redirectField) {
+                    redirectField.value = `pagamento.html?valor=${valor}`;
+                }
+            }
+            atualizarRedirect();
+
             const map = L.map('map').setView([-14.2350, -51.9253], 4);
             const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap', maxZoom: 19 });
             const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri', maxZoom: 19 });
@@ -818,7 +829,13 @@ ${tracksXml}
                     folder.file(`Recibo_${sanitizeFilename(cliente)}_${digitos}.pdf`, pdfBlob);
                     const zipBlob = await zip.generateAsync({type:'blob'});
                     saveAs(zipBlob, `${folderName}.zip`);
-                    alert('✅ Arquivo baixado! Vá até o formulário de contato e anexe o .zip. Após enviar, você será redirecionado para o pagamento.');
+
+                    // Salvar o valor no localStorage e atualizar o campo de redirecionamento
+                    const valorFinal = valorTotal.toFixed(2);
+                    localStorage.setItem('valorPedido', valorFinal);
+                    atualizarRedirect();
+
+                    alert('✅ Arquivo baixado! Agora vá até o formulário de contato e anexe o .zip. Após o envio, você será redirecionado para o pagamento.');
                 } catch(e) { alert('Erro: ' + e.message); }
             });
 
