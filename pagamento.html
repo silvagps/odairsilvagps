@@ -172,19 +172,19 @@
     </div>
 
     <script>
-        // Obter valor da URL (ex: pagamento.html?valor=350.00)
-        const params = new URLSearchParams(window.location.search);
-        const valor = params.get('valor');
+        // Obter valor do localStorage
+        const valorSalvo = localStorage.getItem('valorPedido');
+        const valor = valorSalvo ? parseFloat(valorSalvo) : 0;
 
         // Exibir valor formatado
         const valorContainer = document.getElementById('valor-container');
-        if (valor) {
-            valorContainer.textContent = `R$ ${parseFloat(valor).toFixed(2).replace('.', ',')}`;
+        if (valor > 0) {
+            valorContainer.textContent = `R$ ${valor.toFixed(2).replace('.', ',')}`;
         } else {
-            valorContainer.textContent = 'Valor não informado';
+            valorContainer.textContent = 'Valor não informado (gere o pedido primeiro)';
         }
 
-        // Gerar QR Code PIX (usando chave fixa e valor recebido)
+        // Gerar QR Code PIX
         function gerarQRCodePix(valor) {
             const chave = '+5591981743266';
             const nome = 'JOSE ODAIR DA SILVA';
@@ -210,8 +210,8 @@
             return (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
         }
 
-        if (valor) {
-            gerarQRCodePix(parseFloat(valor));
+        if (valor > 0) {
+            gerarQRCodePix(valor);
         }
 
         // Configurar links do Mercado Pago
@@ -219,12 +219,9 @@
         const btnAVista = document.getElementById('btn-a-vista');
         const btnParcelado = document.getElementById('btn-parcelado');
 
-        if (valor) {
-            // Mercado Pago aceita parâmetro 'amount' no link de checkout
-            const valorAVista = parseFloat(valor);
-            const valorParcelado = valorAVista + 20;
-            btnAVista.href = `${linkBase}?amount=${valorAVista.toFixed(2)}`;
-            btnParcelado.href = `${linkBase}?amount=${valorParcelado.toFixed(2)}`;
+        if (valor > 0) {
+            btnAVista.href = `${linkBase}?amount=${valor.toFixed(2)}`;
+            btnParcelado.href = `${linkBase}?amount=${(valor + 20).toFixed(2)}`;
         } else {
             btnAVista.href = linkBase;
             btnParcelado.href = linkBase;
