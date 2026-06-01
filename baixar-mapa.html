@@ -169,15 +169,18 @@
     </div>
 
     <script>
-        // ---------- BANCO DE MAPAS (ID -> LINK DO GOOGLE DRIVE) ----------
-        // Adicione aqui os IDs e respectivos links de download.
-        // O link do Google Drive deve ser configurado como "Qualquer pessoa com o link pode visualizar".
+        // ---------- BANCO DE MAPAS (ID -> LINK DE DOWNLOAD DIRETO) ----------
+        // Para cada ID, coloque o link de download direto do Google Drive.
+        // Para obter o link direto:
+        // 1. No Google Drive, clique com botão direito no arquivo -> Compartilhar -> "Qualquer pessoa com o link pode visualizar".
+        // 2. Copie o link (ex: https://drive.google.com/file/d/FILE_ID/view?usp=sharing).
+        // 3. Extraia o FILE_ID (a parte entre /d/ e /view).
+        // 4. Monte o link direto: https://drive.google.com/uc?export=download&id=FILE_ID
         const bancoMapas = {
-			'ID DO GPS':'LINK DO DRIVE'
-            '3354243111':'https://drive.google.com/drive/folders/1_PkHUFUEEUhW__SI9bfaGvNggBmGWm2u?usp=sharing',
-            '3629338055':'https://drive.google.com/file/d/12NtPvauTIorRQlWDUTcQHdq7hsWLPkYy/view?usp=sharing',			
-			'3420371933':'https://drive.google.com/file/d/1Wp92z29qIGZNTcFWB3u8uu1E7JaAWHmh/view?usp=sharing',
-            // Continue adicionando...
+            '3354243111': 'https://drive.google.com/uc?export=download&id=1Q9Axr_vg7K3nFWjG2Xkz8a4B5mP7yLcV', // Substitua pelo ID real
+            '3629338055': 'https://drive.google.com/uc?export=download&id=12NtPvauTIorRQlWDUTcQHdq7hsWLPkYy',
+            '3420371933': 'https://drive.google.com/file/d/1Wp92z29qIGZNTcFWB3u8uu1E7JaAWHmh/view?usp=drive_link',
+            // Adicione mais entradas conforme necessário
         };
 
         function buscarMapa() {
