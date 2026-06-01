@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Baixar Meu Mapa | Odair Silva GPS</title>
-    <meta name="description" content="Acesse o download do seu mapa para GPS Garmin e Eseek usando o ID do aparelho.">
+    <meta name="description" content="Acesse o download do seu mapa para GPS Garmin e Eseek usando o ID do aparelho ou WhatsApp.">
     <link rel="icon" type="image/png" href="https://i.imgur.com/QMO8U0U.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,12 +55,6 @@
         }
         .logo-area .logo img { height: 50px; width: auto; border-radius: 6px; }
         .logo-area p { color: #aaa; font-size: 1rem; }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-            font-weight: 700;
-        }
 
         .download-card {
             background: var(--dark);
@@ -73,6 +67,7 @@
             color: var(--accent);
             margin-bottom: 1rem;
         }
+        .download-card select,
         .download-card input {
             width: 100%;
             padding: 0.9rem;
@@ -82,8 +77,13 @@
             color: white;
             font-size: 1.1rem;
             text-align: center;
-            margin: 1rem 0;
-            letter-spacing: 2px;
+            margin: 0.8rem 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .download-card select {
+            text-align-last: center;
+            -webkit-appearance: none;
+            appearance: none;
         }
         .download-card button {
             width: 100%;
@@ -98,6 +98,7 @@
             text-transform: uppercase;
             cursor: pointer;
             letter-spacing: 1px;
+            margin-top: 0.5rem;
         }
         .download-card button:hover { background: #a5621e; }
 
@@ -132,6 +133,24 @@
         }
         .result-box a:hover { background: #a5621e; }
         .result-box p { margin: 0.5rem 0; }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem 1.2rem;
+            border: 2px solid var(--accent);
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+        .btn-back:hover {
+            background: var(--accent);
+            color: #1e1e1a;
+        }
     </style>
 </head>
 <body>
@@ -143,12 +162,29 @@
             </div>
             <p>Baixar Meu Mapa</p>
         </div>
-        <a href="index.html" class="back-link">&larr; Voltar ao site</a>
+        <a href="index.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao site</a>
 
         <div class="download-card">
             <h2>🔒 Acesso Restrito</h2>
-            <p style="color:#aaa; margin-bottom:1rem;">Insira o ID do seu GPS para acessar o link de download do seu mapa.</p>
-            <input type="text" id="deviceIdInput" placeholder="Ex.: 3354243111">
+            <p style="color:#aaa; margin-bottom:1rem;">Selecione o modelo do seu aparelho e informe os dados abaixo para baixar seu mapa.</p>
+
+            <!-- Seletor de modelo -->
+            <select id="modeloSelect" onchange="atualizarCampos()">
+                <option value="">-- Selecione o modelo --</option>
+                <option value="garmin">Garmin (Alpha, Astro)</option>
+                <option value="eseek">eSEEk</option>
+            </select>
+
+            <!-- Campo para ID Garmin -->
+            <div id="grupoGarmin" style="display:none;">
+                <input type="text" id="deviceIdInput" placeholder="ID do GPS (ex.: 3354243111)">
+            </div>
+
+            <!-- Campo para WhatsApp eSEEk -->
+            <div id="grupoEseek" style="display:none;">
+                <input type="tel" id="whatsappInput" placeholder="WhatsApp com DDD (ex.: 5591981743266)">
+            </div>
+
             <button onclick="buscarMapa()">🔍 Buscar Mapa</button>
 
             <div id="resultSuccess" class="result-box success">
@@ -159,8 +195,8 @@
             </div>
 
             <div id="resultError" class="result-box error">
-                <p>❌ ID não encontrado.</p>
-                <p style="font-size:0.9rem;">Verifique se digitou corretamente. Se contratou o serviço recentemente, seu mapa estará disponível em breve.</p>
+                <p>❌ Nenhum mapa encontrado.</p>
+                <p style="font-size:0.9rem;">Verifique os dados informados. Se contratou o serviço recentemente, seu mapa estará disponível em breve.</p>
                 <a href="https://wa.me/5591981743266?text=Olá%20Odair!%20Preciso%20de%20ajuda%20para%20baixar%20meu%20mapa." target="_blank" style="display:inline-block; margin-top:0.8rem; background:#25d366; color:white; padding:0.6rem 1.5rem; border-radius:8px; text-decoration:none; font-weight:700;">
                     📱 Falar no WhatsApp
                 </a>
@@ -169,22 +205,52 @@
     </div>
 
     <script>
-        // ---------- BANCO DE MAPAS (ID -> LINK DE DOWNLOAD DIRETO) ----------
-        // Para cada ID, coloque o link de download direto do Google Drive.
-        // Para obter o link direto:
+        // ---------- BANCO DE MAPAS (CHAVE -> LINK DE DOWNLOAD DIRETO) ----------
+        // Chave pode ser o ID do Garmin (ex.: "3354243111") ou o número WhatsApp do eSEEk (ex.: "5591981743266").
+        // Para obter o link direto do Google Drive:
         // 1. No Google Drive, clique com botão direito no arquivo -> Compartilhar -> "Qualquer pessoa com o link pode visualizar".
         // 2. Copie o link (ex: https://drive.google.com/file/d/FILE_ID/view?usp=sharing).
         // 3. Extraia o FILE_ID (a parte entre /d/ e /view).
         // 4. Monte o link direto: https://drive.google.com/uc?export=download&id=FILE_ID
         const bancoMapas = {
-            '3420371933': 'https://drive.google.com/uc?export=download&id=1Wp92z29qIGZNTcFWB3u8uu1E7JaAWHmh', // Substitua pelo ID real
+            // Garmin (ID)
+            '3354243111': 'https://drive.google.com/uc?export=download&id=1Q9Axr_vg7K3nFWjG2Xkz8a4B5mP7yLcV',
             '3629338055': 'https://drive.google.com/uc?export=download&id=12NtPvauTIorRQlWDUTcQHdq7hsWLPkYy',
-            
+            '3420371933': 'https://drive.google.com/uc?export=download&id=1Wp92z29qIGZNTcFWB3u8uu1E7JaAWHmh',
+            // eSEEk (WhatsApp)
+            '5591981743266': 'https://drive.google.com/uc?export=download&id=1ExemploEseek1',
             // Adicione mais entradas conforme necessário
         };
 
+        function atualizarCampos() {
+            const modelo = document.getElementById('modeloSelect').value;
+            const grupoGarmin = document.getElementById('grupoGarmin');
+            const grupoEseek = document.getElementById('grupoEseek');
+            const idInput = document.getElementById('deviceIdInput');
+            const whatsappInput = document.getElementById('whatsappInput');
+
+            if (modelo === 'garmin') {
+                grupoGarmin.style.display = 'block';
+                grupoEseek.style.display = 'none';
+                whatsappInput.value = '';
+            } else if (modelo === 'eseek') {
+                grupoGarmin.style.display = 'none';
+                grupoEseek.style.display = 'block';
+                idInput.value = '';
+            } else {
+                grupoGarmin.style.display = 'none';
+                grupoEseek.style.display = 'none';
+            }
+
+            // Esconde resultados ao trocar o modelo
+            document.getElementById('resultSuccess').style.display = 'none';
+            document.getElementById('resultError').style.display = 'none';
+        }
+
         function buscarMapa() {
-            const id = document.getElementById('deviceIdInput').value.trim();
+            const modelo = document.getElementById('modeloSelect').value;
+            const idInput = document.getElementById('deviceIdInput').value.trim();
+            const whatsappInput = document.getElementById('whatsappInput').value.trim();
             const successDiv = document.getElementById('resultSuccess');
             const errorDiv = document.getElementById('resultError');
             const linkDownload = document.getElementById('linkDownload');
@@ -194,14 +260,34 @@
             successDiv.style.display = 'none';
             errorDiv.style.display = 'none';
 
-            if (!id) {
-                errorDiv.style.display = 'block';
+            if (!modelo) {
+                alert('Selecione o modelo do GPS.');
                 return;
             }
 
-            if (bancoMapas[id]) {
-                linkDownload.href = bancoMapas[id];
-                mapaInfo.textContent = `ID: ${id}`;
+            let chave = '';
+            if (modelo === 'garmin') {
+                if (!idInput) {
+                    alert('Informe o ID do GPS Garmin.');
+                    return;
+                }
+                chave = idInput;
+            } else if (modelo === 'eseek') {
+                if (!whatsappInput) {
+                    alert('Informe o número de WhatsApp com DDD.');
+                    return;
+                }
+                // Remove caracteres não numéricos para padronizar a chave
+                chave = whatsappInput.replace(/\D/g, '');
+                if (chave.length < 11) {
+                    alert('Número de WhatsApp inválido. Use o formato: 5591981743266');
+                    return;
+                }
+            }
+
+            if (bancoMapas[chave]) {
+                linkDownload.href = bancoMapas[chave];
+                mapaInfo.textContent = `Chave: ${chave} (${modelo === 'garmin' ? 'Garmin' : 'eSEEk'})`;
                 successDiv.style.display = 'block';
             } else {
                 errorDiv.style.display = 'block';
