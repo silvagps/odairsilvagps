@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog do Caçador – Dicas e Novidades | Odair Silva GPS</title>
     <meta name="description" content="Blog com dicas sobre GPS Garmin, Eseek, mapas de satélite, cartão SD e caça a javalis. Fique por dentro das novidades.">
-    <meta name="keywords" content="blog caçador, GPS Garmin, Eseek, mapas de satélite, dicas de caça, javali">
+    <meta name="keywords" content="blog caçador, GPS Garmin, Eseek, mapas de satélite, dicas de caça, javali, rastreador, coleira, VHF, GPS">
     <meta name="author" content="Odair Silva GPS">
     <meta property="og:title" content="Blog do Caçador – Dicas e Novidades | Odair Silva GPS">
     <meta property="og:description" content="Dicas sobre GPS Garmin, Eseek e mapas de satélite para caçadores.">
@@ -35,6 +35,7 @@
         }
         h1, h2, h3 { font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); }
         h2 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+        h3 { font-size: 1.3rem; color: var(--primary); margin: 1.2rem 0 0.5rem; }
         a { text-decoration: none; color: inherit; }
         img { max-width: 100%; display: block; }
 
@@ -160,6 +161,14 @@
             font-size: 1.8rem;
             margin-bottom: 0.2rem;
         }
+        .post h3 {
+            color: #3d5c2a;
+            text-align: left;
+            font-size: 1.3rem;
+            margin: 1.4rem 0 0.4rem;
+            border-bottom: 2px solid #c47a2b33;
+            padding-bottom: 0.2rem;
+        }
         .post .date {
             color: #888;
             font-size: 0.9rem;
@@ -171,6 +180,32 @@
         .post ul, .post ol {
             margin-left: 1.5rem;
             margin-bottom: 1rem;
+        }
+        .post ul li, .post ol li {
+            margin-bottom: 0.4rem;
+        }
+        .post strong {
+            color: #1e1e1a;
+        }
+        .post .highlight-box {
+            background: #e8f0e0;
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.2rem;
+            margin: 1.2rem 0;
+            border-radius: 0 8px 8px 0;
+            font-weight: 500;
+        }
+        .post .veredito-box {
+            background: #fdf3e5;
+            border: 2px solid var(--accent);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+        .post .veredito-box h3 {
+            color: var(--accent);
+            border: none;
+            margin-top: 0;
         }
 
         footer {
@@ -204,6 +239,7 @@
         @media (max-width: 768px) {
             .main-container { flex-direction: column; }
             .sidebar { position: static; }
+            .post h2 { font-size: 1.4rem; }
         }
     </style>
 </head>
@@ -227,16 +263,112 @@
             <input type="text" id="searchBox" placeholder="Digite um termo...">
             <h3>📌 Artigos</h3>
             <ul id="articlesList">
+                <li><a href="#post4">Garmin vs Eseek: qual rastreador para javali no Brasil?</a></li>
+                <li><a href="#post2">O que é a ativação do BirdsEye satélite Garmin?</a></li>
                 <li><a href="#post1">Como escolher o cartão SD ideal para seu GPS Garmin</a></li>
-                <li><a href="#post2">5 vantagens dos mapas de satélite para o controle de javalis</a></li>
-                <li><a href="#post3">O que é s ativação do BirdsEye satélite Garmin?</a></li>
-                <!-- ADICIONE NOVOS TÍTULOS AQUI -->
+                <li><a href="#post3">5 vantagens dos mapas de satélite para o controle de javalis</a></li>
             </ul>
         </aside>
 
         <!-- CONTEÚDO DOS ARTIGOS -->
         <div class="content-area">
-            <!-- ARTIGO 1 -->
+
+            <!-- ========== NOVO ARTIGO: GARMIN VS ESEEK ========== -->
+            <article class="post" id="post4">
+                <h2>Garmin vs Eseek: qual rastreador se adapta melhor ao javali no Brasil?</h2>
+                <p class="date">Publicado em 01 de junho de 2026</p>
+
+                <p>Se você está montando sua matilha ou quer trocar de equipamento, essa dúvida aparece em toda roda de caçador: <strong>vou de Garmin ou de Eseek?</strong> A resposta não é simples como "um é melhor que o outro". O que existe é o aparelho certo para o seu tipo de caça, o seu bolso e o terreno onde você bota os cachorros.</p>
+
+                <p>Aqui vamos colocar os dois frente a frente no que interessa: alcance real no mato brasileiro, robustez para barro e chuva, bateria que aguenta o tranco, funções que salvam o cachorro e o custo-benefício na hora de comprar e manter. <strong>Nada de teoria de manual — é conversa de quem já sujou a bota.</strong></p>
+
+                <div class="highlight-box">
+                    ⚠️ <strong>Aviso importante:</strong> rastreador não é enfeite, é ferramenta de salvar cachorro. Invista no melhor que seu dinheiro puder pagar e aprenda a usar todos os recursos. Na hora do aperto, o manual não vai estar no seu bolso.
+                </div>
+
+                <!-- SEÇÃO 1: ALCANCE -->
+                <h3>1. Alcance: o que funciona no grotão e na capoeira fechada?</h3>
+                <p>Esse é o ponto que mais derruba equipamento importado. O Brasil não é planície americana. Temos morro, grota, mata de galeria, canavial e cerradão. <strong>O sinal sofre.</strong></p>
+
+                <p><strong>🔷 Garmin (Astro 430 / Alpha 100 com coleiras T5, T20 ou TT15):</strong><br>
+                Trabalha em frequência MURS (151-154 MHz) ou UHF, dependendo da versão. Em campo aberto, a Garmin promete até 9 km, e realmente entrega isso em pasto limpo ou topo de serra. O problema começa quando o cachorro desce um barranco ou entra em capoeira molhada. O sinal digital de telemetria (que manda a posição no mapa) é mais sensível a obstáculos e umidade. <strong>Na prática, em mata fechada e relevo quebrado, o alcance útil pode cair para 1,5 a 3 km.</strong> Se perder o sinal de rádio, você perde a posição em tempo real — e aí só resta torcer para o cachorro voltar ao alcance.</p>
+
+                <p><strong>🔷 Eseek (GRS com coleira Talismã ou JBS no VHF puro):</strong><br>
+                A grande vantagem do Eseek é o uso da faixa VHF (136-174 MHz). O comprimento de onda maior penetra melhor na vegetação e contorna parcialmente obstáculos de relevo. No modelo GRS (GPS + VHF), a posição exata do cão é transmitida via VHF digital, então você vê o ponto no mapa como no Garmin. No JBS (só VHF), você usa a antena direcional e o bip para achar o cachorro. Muitos caçadores juram que o VHF do Eseek mantém sinal onde o Garmin já silenciou, principalmente em grotas úmidas e canaviais densos. <strong>Alcance prático: de 3 a 6 km em mata fechada, podendo chegar a 10 km em relevo favorável.</strong></p>
+
+                <p><strong>🎯 Resumo do alcance:</strong></p>
+                <ul>
+                    <li><strong>Terreno aberto e caça em pasto:</strong> os dois entregam alcance suficiente.</li>
+                    <li><strong>Mata fechada, morro e umidade:</strong> Eseek costuma manter sinal mais estável, especialmente no modo VHF.</li>
+                    <li><strong>Backup analógico:</strong> se o sinal digital cair no Eseek GRS, você ainda tem o VHF tradicional para achar a direção. No Garmin, se cair o rádio, a tela congela.</li>
+                </ul>
+
+                <!-- SEÇÃO 2: ROBUSTEZ -->
+                <h3>2. Robustez: barro, chuva, porrada e riacho</h3>
+                <p>Coleira de rastreador sofre mais que cachorro magro em dia de fome. Toma choque contra tronco, mergulha em açude, rola no barro e ainda tem que aguentar a pressão da matilha.</p>
+
+                <p><strong>🔷 Garmin:</strong> As coleiras T5, T20 e TT15 têm construção sólida, corpo em policarbonato e borracha, e são classificadas como IPX7 (suportam imersão em até 1 metro por 30 minutos). A central (Astro 430 ou Alpha 100) é resistente, mas a tela sensível ao toque do Alpha pode incomodar com dedo molhado ou sujo de barro. <strong>Problema crônico:</strong> os contatos de carga da coleira podem oxidar se não forem bem secos após a caçada.</p>
+
+                <p><strong>🔷 Eseek:</strong> A Eseek construiu a fama na robustez. As coleiras (Talismã, JBS) são praticamente indestrutíveis, com carcaça em nylon com fibra de vidro e vedação que aguenta longos períodos submersa. A central (modelos de mão) é mais espartana, sem touch, com botões físicos que funcionam perfeitamente debaixo de chuva. <strong>Os conectores de carga costumam ser mais bem vedados que os do Garmin.</strong></p>
+
+                <p><strong>🎯 Resumo da robustez:</strong></p>
+                <ul>
+                    <li><strong>Coleiras:</strong> empate técnico, com leve vantagem para a Eseek em resistência a impactos e vedação de longo prazo.</li>
+                    <li><strong>Centrais:</strong> Eseek ganha em usabilidade com chuva e barro (botões físicos). Garmin Alpha com touch pode frustrar em condição adversa.</li>
+                </ul>
+
+                <!-- SEÇÃO 3: BATERIA -->
+                <h3>3. Bateria: quantos dias de caça sem recarregar?</h3>
+                <p><strong>🔷 Garmin:</strong> Coleira T5/T20: até 20-40 horas (dependendo do intervalo de atualização). Central Astro 430: até 20 horas. Alpha 100: até 20 horas. No modo mais rápido (2,5s), a bateria da coleira cai para cerca de 20 horas — dá para uma caçada longa, mas exige recarga no dia seguinte. Muito caçador leva power bank para recarregar a central no carro.</p>
+
+                <p><strong>🔷 Eseek:</strong> Coleira Talismã (GPS+VHF): dura de <strong>40 a 60 horas</strong> em uso contínuo. Coleira JBS (só VHF): pode durar vários dias (até 100 horas). A central Eseek costuma durar mais de 24 horas com uma carga. É comum o caçador fazer um final de semana inteiro de caça sem se preocupar em recarregar as coleiras.</p>
+
+                <p><strong>🎯 Resumo da bateria:</strong> <span style="color:#c47a2b; font-weight:700;">Eseek ganha com folga.</span> Se você faz caçadas de vários dias ou não quer se preocupar em carregar todo dia, a autonomia da Eseek é superior.</p>
+
+                <!-- SEÇÃO 4: RECURSOS -->
+                <h3>4. Recursos e usabilidade: o que cada um oferece na tela</h3>
+                <p><strong>🔷 Garmin:</strong> É o rei da informação. Tela colorida, mapas topográficos, criação de waypoints, rotas, histórico de percurso, gráfico de velocidade do cão, alertas de "latido", "parado", "acuado". Permite ver a direção para onde o cachorro está correndo. O Alpha ainda tem função de treinamento com estímulo e tom. <strong>É um ecossistema completo.</strong> Ponto negativo: a interface pode ser complexa para quem não tem paciência de mexer em configurações.</p>
+
+                <p><strong>🔷 Eseek (GRS):</strong> Tela monocromática ou colorida simples. Mostra a posição dos cães no mapa com ícones, distância, direção e velocidade. Não tem os gráficos bonitos do Garmin, mas <strong>entrega o essencial: onde estão meus cachorros.</strong> A navegação pelos menus é mais simples e direta. O VHF direcional integrado é um recurso que o Garmin não tem — se tudo falhar, você ainda acha o cão pelo bip.</p>
+
+                <p><strong>🎯 Resumo dos recursos:</strong> Garmin é mais completo e rico em dados. Eseek é mais direto: posição, distância e direção, sem firulas, com o backup analógico que nenhum Garmin oferece.</p>
+
+                <!-- SEÇÃO 5: CUSTO -->
+                <h3>5. Custo-benefício: o bolso agradece?</h3>
+                <ul>
+                    <li><strong>Garmin Astro 430 + coleira T5:</strong> cerca de R$ 5.500 a R$ 7.000 (importado, sem garantia oficial no Brasil).</li>
+                    <li><strong>Garmin Alpha 100 + TT15:</strong> pode passar de R$ 8.000.</li>
+                    <li><strong>Eseek GRS + coleira Talismã:</strong> na faixa de R$ 3.000 a R$ 4.500, com garantia e assistência nacional.</li>
+                    <li><strong>Eseek JBS (só VHF) + coleira:</strong> a partir de R$ 1.500.</li>
+                </ul>
+                <p>A diferença é brutal. E não para na compra: manutenção, reposição de coleiras e acessórios Garmin custam caro e dependem de importação. <strong>A Eseek tem assistência no Brasil</strong>, com envio para fábrica e peças de reposição disponíveis.</p>
+
+                <!-- SEÇÃO 6: VEREDITO -->
+                <div class="veredito-box">
+                    <h3>🏆 Veredito: qual escolher?</h3>
+                    <p><strong>✅ Escolha o Garmin se:</strong></p>
+                    <ul>
+                        <li>Você caça em áreas de pasto, cerrado aberto e relevo mais suave.</li>
+                        <li>Gosta de tecnologia, mapas detalhados e telemetria completa.</li>
+                        <li>Faz questão do recurso de treinamento (Alpha) e quer analisar o percurso depois.</li>
+                        <li>Tem orçamento para o investimento inicial mais alto e para manter.</li>
+                    </ul>
+                    <p><strong>✅ Escolha o Eseek se:</strong></p>
+                    <ul>
+                        <li>Sua caça é em mata fechada, grota, canavial e morro.</li>
+                        <li>A prioridade máxima é manter o sinal do cachorro, não importa o terreno.</li>
+                        <li>Você precisa de bateria para vários dias sem recarga.</li>
+                        <li>Quer a segurança do backup VHF — se o GPS falhar, o bip te leva até o cão.</li>
+                        <li>Busca o melhor custo-benefício e assistência técnica nacional.</li>
+                    </ul>
+                </div>
+
+                <p>Muitos caçadores experientes fazem um <strong>mix</strong>: usam Eseek nas coleiras principais pelo alcance em mata e robustez, e carregam um Garmin para mapear a área e navegar. Mas se a grana está curta e a segurança dos cães é a prioridade, o Eseek entrega o que promete sem firulas.</p>
+
+                <p style="margin-top:1.5rem;">👉 Tem dúvidas sobre qual equipamento comprar ou quer instalar mapas de satélite no seu GPS? <a href="https://wa.me/5591981743266?text=Olá%20Odair,%20quero%20saber%20mais%20sobre%20rastreadores%20Garmin%20e%20Eseek." target="_blank" style="color:#c47a2b; font-weight:700;">Fale comigo pelo WhatsApp</a> ou acesse o <a href="simulador.html" style="color:#2e4a1f; font-weight:700;">simulador de cobertura</a>.</p>
+            </article>
+
+            <!-- ARTIGO 2 (original) -->
             <article class="post" id="post2">
                 <h2>O que é ativação do BirdsEye satélite Garmin?</h2>
                 <p class="date">Publicado em 30 de maio de 2026</p>
@@ -249,8 +381,8 @@
                 </ol>
                 <p>Se você usa um Garmin Alpha, Astro ou eSEEk, posso instalar o mapa remotamente. Acesse o <a href="simulador.html" style="color:var(--accent);">simulador de cobertura</a> e veja como funciona.</p>
             </article>
-                      
-            <!-- ARTIGO 2 -->
+
+            <!-- ARTIGO 1 (original) -->
             <article class="post" id="post1">
                 <h2>Como escolher o cartão SD ideal para seu GPS Garmin</h2>
                 <p class="date">Publicado em 28 de maio de 2026</p>
@@ -264,8 +396,8 @@
                 <p>Com o cartão certo, a instalação dos mapas de satélite via BirdsEye fica muito mais estável. Se tiver dúvidas, entre em contato pelo WhatsApp.</p>
             </article>
 
-            <!-- ARTIGO 3 -->
-            <article class="post" id="post2">
+            <!-- ARTIGO 3 (original) -->
+            <article class="post" id="post3">
                 <h2>5 vantagens dos mapas de satélite para o controle de javalis</h2>
                 <p class="date">Publicado em 20 de maio de 2026</p>
                 <ol>
@@ -278,8 +410,6 @@
                 <p>Se você usa um Garmin Alpha, Astro ou eSEEk, posso instalar o mapa remotamente. Acesse o <a href="simulador.html" style="color:var(--accent);">simulador de cobertura</a> e veja como funciona.</p>
             </article>
 
-            <!-- NOVOS ARTIGOS AQUI -->
-            <!-- Copie o bloco <article class="post"> acima e cole aqui -->
         </div>
     </div>
 
@@ -301,6 +431,17 @@
             posts.forEach(post => {
                 const text = post.innerText.toLowerCase();
                 post.style.display = text.includes(term) ? 'block' : 'none';
+            });
+        });
+
+        // Rolar suavemente para o artigo ao clicar na sidebar
+        document.querySelectorAll('.sidebar a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
         });
     </script>
