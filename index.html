@@ -96,7 +96,7 @@
         .device-item { background: #2a2a22; border: 1px solid #444; border-radius: var(--radius); padding: 1.2rem 1.5rem; min-width: 140px; text-align: center; }
         .device-item i { font-size: 2rem; color: var(--accent); }
 
-        /* NOVA SEÇÃO: BAIXAR MAPA */
+        /* SEÇÃO BAIXAR MAPA */
         #baixar-mapa {
             background: var(--dark);
             padding: 4rem 0;
@@ -355,7 +355,7 @@
         </div>
     </section>
 
-    <!-- NOVA SEÇÃO: BAIXAR MAPA -->
+    <!-- SEÇÃO BAIXAR MAPA -->
     <section id="baixar-mapa">
         <div class="container">
             <div class="section-title">
@@ -586,14 +586,18 @@
     </footer>
 
     <script>
-        // ==================== BANCO DE MAPAS (BAIXAR MAPA) ====================
-        const bancoMapas = {
-            '3627536966': 'https://drive.google.com/uc?export=download&id=1sAXpCrE8U_asJj8T26k9WVFpMTmOszHV',
-            '3354243111': 'https://drive.google.com/uc?export=download&id=1Q9Axr_vg7K3nFWjG2Xkz8a4B5mP7yLcV',
-            '3629338055': 'https://drive.google.com/uc?export=download&id=12NtPvauTIorRQlWDUTcQHdq7hsWLPkYy',
-            '3420371933': 'https://drive.google.com/uc?export=download&id=1Wp92z29qIGZNTcFWB3u8uu1E7JaAWHmh',
-            '91981743266': 'https://drive.google.com/uc?export=download&id=1ExemploEseek1',
-        };
+        // ==================== BANCO DE MAPAS (CARREGADO DE JSON EXTERNO) ====================
+        let bancoMapas = {};
+
+        fetch('banco-mapas.json')
+          .then(response => response.json())
+          .then(data => {
+            bancoMapas = data;
+            console.log('✅ Banco de mapas carregado com sucesso.');
+          })
+          .catch(error => {
+            console.error('❌ Erro ao carregar banco de mapas:', error);
+          });
 
         function atualizarCamposDownload() {
             const modelo = document.getElementById('modeloSelectDownload').value;
