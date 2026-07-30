@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamento | Odair Silva GPS</title>
-    <meta name="description" content="Finalize o pagamento do seu mapa para GPS Garmin e Eseek.">
+    <meta name="description" content="Finalize o pagamento do seu mapa para GPS Garmin.">
     <link rel="icon" type="image/png" href="https://i.imgur.com/QMO8U0U.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +35,7 @@
         }
         .container {
             width: 100%;
-            max-width: 650px;
+            max-width: 500px;
             margin: 0 auto;
         }
         .logo-area {
@@ -57,56 +57,105 @@
         .logo-area .logo img { height: 50px; width: auto; border-radius: 6px; }
         .logo-area p { color: #aaa; font-size: 1rem; }
 
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .back-link:hover { text-decoration: underline; }
+
         .card {
             background: var(--dark);
             border-radius: var(--radius);
             padding: 2rem;
             box-shadow: var(--shadow);
-        }
-
-        .tabs {
-            display: flex;
-            gap: 0;
-            margin-bottom: 2rem;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        .tabs button {
-            flex: 1;
-            padding: 0.8rem;
-            border: none;
-            background: #2a2a22;
-            color: #aaa;
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .tabs button.active {
-            background: var(--accent);
-            color: #1e1e1a;
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        .pix-section {
             text-align: center;
         }
-        .pix-section .qr-code {
-            background: white;
-            display: inline-block;
-            padding: 15px;
-            border-radius: 12px;
+
+        .alerta-valor {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin: 1rem 0;
+            color: #856404;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: left;
+        }
+        .alerta-valor i { margin-right: 8px; }
+
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .input-group input {
+            padding: 0.7rem;
+            font-size: 1.2rem;
+            width: 150px;
+            text-align: center;
+            border: 2px solid #ccc;
+            border-radius: 6px;
+            font-family: 'Roboto', sans-serif;
+            background: #2a2a22;
+            color: white;
+        }
+        .btn-accent {
+            background: var(--accent);
+            color: #1e1e1a;
+            border: none;
+            padding: 0.7rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+        .btn-accent:hover { background: #a5621e; }
+
+        .valor-display {
+            background: var(--accent);
+            color: #1e1e1a;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 1.5rem 0;
+        }
+
+        /* Container centralizador do QR Code */
+        .qr-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             margin: 1rem 0;
         }
-        .pix-section .qr-code img {
+        .qr-wrapper {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            width: 230px;
+            height: 230px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qr-wrapper img {
             width: 200px;
             height: 200px;
         }
+
         .pix-key {
             background: #2a2a22;
             border: 1px solid #444;
@@ -126,68 +175,39 @@
             border-radius: 4px;
             cursor: pointer;
             font-weight: 700;
+            transition: 0.3s;
         }
+        .pix-key button:hover { background: #a5621e; }
 
-        .card-section {
-            text-align: center;
-        }
-        .card-section select {
-            width: 100%;
-            padding: 0.8rem;
-            background: #2a2a22;
-            border: 1px solid #444;
-            border-radius: 8px;
+        /* Notificação de cópia */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00bf63;
             color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-family: 'Oswald', sans-serif;
             font-size: 1rem;
-            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0,191,99,0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .card-section .btn-mercado-pago {
-            display: inline-block;
-            width: 100%;
-            padding: 1rem;
-            background: #00a650;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            cursor: pointer;
-            letter-spacing: 1px;
-            text-align: center;
-            text-decoration: none;
-            margin-top: 0.5rem;
-        }
-        .card-section .btn-mercado-pago:hover { background: #008f45; }
-        .card-section .valor-parcelado {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.3rem;
-            color: var(--accent);
-            margin: 0.5rem 0;
-        }
+        .toast.show { opacity: 1; }
 
-        .valor-display {
-            background: var(--accent);
-            color: #1e1e1a;
-            text-align: center;
-            padding: 1rem;
-            border-radius: 8px;
-            font-family: 'Oswald', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .back-link {
-            display: inline-block;
-            margin-bottom: 1rem;
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        @media (max-width: 500px) {
-            .card-row { flex-direction: column; }
+        @media (max-width: 400px) {
+            .qr-wrapper {
+                width: 200px;
+                height: 200px;
+            }
+            .qr-wrapper img {
+                width: 170px;
+                height: 170px;
+            }
         }
     </style>
 </head>
@@ -200,64 +220,79 @@
             </div>
             <p>Finalizar Pagamento</p>
         </div>
-        <a href="javascript:history.back()" class="back-link">&larr; Voltar</a>
+        <a href="index.html" class="back-link"><i class="fa-solid fa-house"></i> Início</a>
 
         <div class="card">
+            <div class="alerta-valor">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+                <strong>Atenção:</strong> O valor digitado deve ser <u>eEXATAMENTE IGUAL</u> ao que está no recibo. Se o valor estiver incorreto, o serviço <strong>não será efetuado</strong> e o dinheiro será <strong>devolvido em até 24 horas</strong>.
+            </div>
+
+            <div class="input-group">
+                <span style="font-size:1.5rem; font-weight:bold;">R$</span>
+                <input type="number" id="valorInput" placeholder="0.00" step="0.01" min="0.01" oninput="atualizarValor()">
+                <button class="btn-accent" onclick="gerarQRCode()">🔄 Gerar QR Code</button>
+            </div>
+
             <div class="valor-display" id="valorDisplay">R$ --</div>
 
-            <div class="tabs">
-                <button id="tabPix" class="active">PIX</button>
-                <button id="tabCartao">Cartão de Crédito</button>
-            </div>
-
-            <!-- ABA PIX (mantida igual) -->
-            <div id="contentPix" class="tab-content active">
-                <div class="pix-section">
-                    <p style="margin-bottom:1rem;">Escaneie o QR Code ou copie a chave PIX abaixo:</p>
-                    <div class="qr-code">
-                        <img id="qrImage" src="" alt="QR Code PIX">
-                    </div>
-                    <div class="pix-key">
-                        <span id="pixKeyText">91981743266</span>
-                        <button onclick="copiarChave()">📋 Copiar</button>
-                    </div>
-                    <p style="font-size:0.85rem; color:#aaa;">Banco: Inter | Titular: J. Odair da S.</p>
-                    <p style="font-size:0.85rem; color:#aaa;">Após o pagamento, envie o comprovante pelo WhatsApp.</p>
-                    <a href="https://wa.me/5591981743266?text=Olá%20Odair!%20Realizei%20o%20pagamento%20e%20segue%20comprovante." target="_blank" style="display:inline-block; background:#25d366; color:white; padding:0.8rem 2rem; border-radius:8px; text-decoration:none; font-weight:700; margin-top:1rem;">
-                        📱 Enviar Comprovante
-                    </a>
+            <!-- QR Code centralizado -->
+            <div class="qr-container">
+                <div class="qr-wrapper">
+                    <img id="qrImage" src="" alt="QR Code PIX">
                 </div>
             </div>
 
-            <!-- ABA CARTÃO DE CRÉDITO (MERCADO PAGO) -->
-            <div id="contentCartao" class="tab-content">
-                <div class="card-section">
-                    <p style="margin-bottom:1rem;">Escolha a forma de pagamento com cartão:</p>
-                    <select id="parcelas" onchange="atualizarValorParcelado()">
-                        <option value="1">1x à vista (sem juros)</option>
-                        <option value="2">2x (acréscimo de R$ 20,00)</option>
-                    </select>
-                    <div class="valor-parcelado" id="valorParcelado">Total: R$ --</div>
-                    <a href="#" id="linkMercadoPago" class="btn-mercado-pago" target="_blank">
-                        <i class="fa-solid fa-credit-card"></i> Pagar com Mercado Pago
-                    </a>
-                    <p style="font-size:0.8rem; color:#aaa; margin-top:1rem;">Você será redirecionado ao checkout seguro do Mercado Pago.</p>
-                </div>
+            <div class="pix-key">
+                <span id="pixKeyText">91981743266</span>
+                <button onclick="copiarChave()">📋 Copiar</button>
             </div>
+
+            <p style="font-size:0.85rem; color:#aaa;">Banco: Inter | Titular: J. Odair da S.</p>
+            <p style="font-size:0.85rem; color:#aaa;">Após o pagamento, envie o comprovante pelo WhatsApp.</p>
+            <a href="https://wa.me/5591981743266?text=Olá%20Odair!%20Realizei%20o%20pagamento%20e%20segue%20comprovante." target="_blank" style="display:inline-block; background:#25d366; color:white; padding:0.8rem 2rem; border-radius:8px; text-decoration:none; font-weight:700; margin-top:1rem;">
+                📱 Enviar Comprovante
+            </a>
         </div>
     </div>
 
-    <script>
-        // ---------- RECUPERAR VALOR DO PEDIDO ----------
-        const valorStr = localStorage.getItem('valorPedido') || '0';
-        const nomeCliente = localStorage.getItem('nomeCliente') || '';
-        const valorBase = parseFloat(valorStr) || 0;
-        
-        document.getElementById('valorDisplay').textContent = valorBase > 0 
-            ? `R$ ${valorBase.toFixed(2).replace('.', ',')}` 
-            : 'R$ --';
+    <!-- Toast de notificação -->
+    <div id="toast" class="toast">Chave PIX copiada!</div>
 
-        // ---------- GERAR QR CODE PIX ----------
+    <script>
+        let valorAtual = 0;
+
+        // Carrega valor salvo se existir
+        const valorSalvo = parseFloat(localStorage.getItem('valorPedido') || '0');
+        if (valorSalvo > 0) {
+            document.getElementById('valorInput').value = valorSalvo.toFixed(2);
+            valorAtual = valorSalvo;
+            atualizarValor();
+            gerarQRCode();
+        }
+
+        function atualizarValor() {
+            const input = document.getElementById('valorInput');
+            const valor = parseFloat(input.value.replace(',', '.'));
+            if (!isNaN(valor) && valor > 0) {
+                valorAtual = valor;
+                document.getElementById('valorDisplay').textContent = `R$ ${valor.toFixed(2).replace('.', ',')}`;
+            } else {
+                document.getElementById('valorDisplay').textContent = 'R$ --';
+            }
+        }
+
+        function gerarQRCode() {
+            if (valorAtual <= 0) {
+                alert('Informe um valor válido.');
+                return;
+            }
+            const pixCode = gerarPixCode(valorAtual);
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
+            document.getElementById('qrImage').src = qrUrl;
+            document.getElementById('pixKeyText').textContent = '91981743266';
+        }
+
         function crc16CCITT(data) {
             let crc = 0xFFFF;
             for (let i = 0; i < data.length; i++) {
@@ -277,69 +312,46 @@
             return comValor + '6304' + crc16CCITT(comValor + '6304');
         }
 
-        if (valorBase > 0) {
-            const pixCode = gerarPixCode(valorBase);
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`;
-            document.getElementById('qrImage').src = qrUrl;
-            document.getElementById('pixKeyText').textContent = '+5591981743266';
-        } else {
-            document.getElementById('qrImage').src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" fill="%23eee"/><text x="50" y="100" font-size="12" fill="%23999">Informe o valor</text></svg>';
-        }
-
-        // ---------- COPIAR CHAVE PIX ----------
         function copiarChave() {
-            navigator.clipboard.writeText('+5591981743266').then(() => {
-                alert('Chave PIX copiada!');
-            });
-        }
-
-        // ---------- ABAS ----------
-        const tabPix = document.getElementById('tabPix');
-        const tabCartao = document.getElementById('tabCartao');
-        const contentPix = document.getElementById('contentPix');
-        const contentCartao = document.getElementById('contentCartao');
-
-        tabPix.addEventListener('click', () => {
-            tabPix.classList.add('active');
-            tabCartao.classList.remove('active');
-            contentPix.classList.add('active');
-            contentCartao.classList.remove('active');
-        });
-
-        tabCartao.addEventListener('click', () => {
-            tabCartao.classList.add('active');
-            tabPix.classList.remove('active');
-            contentCartao.classList.add('active');
-            contentPix.classList.remove('active');
-            atualizarValorParcelado(); // para exibir o valor logo de cara
-        });
-
-        // ---------- ATUALIZAR VALOR PARCELADO E LINK MERCADO PAGO ----------
-        function atualizarValorParcelado() {
-            const parcelas = parseInt(document.getElementById('parcelas').value);
-            let valorFinal = valorBase;
-            if (parcelas === 2) {
-                valorFinal = valorBase + 20.0;
-            }
-            const valorFormatado = valorFinal.toFixed(2).replace('.', ',');
-            const valorParceladoEl = document.getElementById('valorParcelado');
-            const linkEl = document.getElementById('linkMercadoPago');
-
-            if (parcelas === 1) {
-                valorParceladoEl.textContent = `Total à vista: R$ ${valorFormatado}`;
+            const chave = '91981743266';
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(chave).then(() => {
+                    mostrarToast();
+                }).catch(() => {
+                    fallbackCopy(chave);
+                });
             } else {
-                valorParceladoEl.textContent = `Total em 2x: R$ ${valorFormatado}`;
+                fallbackCopy(chave);
             }
-
-            // Monta o link do Mercado Pago com o valor (se o checkout permitir)
-            const baseLink = 'https://link.mercadopago.com.br/odairsilvagps';
-            const linkComValor = `${baseLink}?amount=${valorFinal.toFixed(2)}`;
-            linkEl.href = linkComValor;
-            linkEl.textContent = `Pagar R$ ${valorFinal.toFixed(2).replace('.', ',')} com Mercado Pago`;
         }
 
-        // Inicializa o valor parcelado ao carregar
-        atualizarValorParcelado();
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    mostrarToast();
+                } else {
+                    alert('Não foi possível copiar automaticamente. Copie manualmente.');
+                }
+            } catch (err) {
+                alert('Erro ao copiar. Copie manualmente: ' + text);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function mostrarToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2000);
+        }
     </script>
 </body>
 </html>
