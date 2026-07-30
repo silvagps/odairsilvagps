@@ -570,6 +570,12 @@
                     <div class="form-group">
                         <label for="anexo" style="display:block; margin-bottom:0.3rem; color:#ccc;">📎 Anexar arquivo .zip</label>
                         <input type="file" id="anexo" name="fi-file-anexo" accept=".zip">
+                        <div class="form-group">
+    <label for="anexo" style="display:block; margin-bottom:0.3rem; color:#ccc;">📎 Anexar arquivo .zip</label>
+    <input type="file" id="anexo" name="fi-file-anexo" accept=".zip">
+    <p id="msgAnexo" style="color: #f39c12; font-size: 0.85rem; margin-top: 0.5rem; display: none;">
+        ⚠️ Anexe o arquivo .zip baixado antes de enviar.
+    </p>
                     </div>
                     <button type="submit">Enviar agora</button>
                 </form>
@@ -810,6 +816,24 @@ ${tracksXml}
             osmLayer.addTo(map);
             let currentMode = 'osm';
 
+            // Validação do anexo no formulário de contato
+const inputAnexo = document.getElementById('anexo');
+const btnSubmit = document.querySelector('#formContato button[type="submit"]');
+const msgAnexo = document.getElementById('msgAnexo');
+
+if (inputAnexo && btnSubmit && msgAnexo) {
+    // Inicia desabilitado e com aviso
+    btnSubmit.disabled = true;
+    msgAnexo.style.display = 'block';
+
+    inputAnexo.addEventListener('change', function() {
+        if (this.files && this.files.length > 0) {
+            btnSubmit.disabled = false;
+            msgAnexo.style.display = 'none';
+        } else {
+            btnSubmit.disabled = true;
+            msgAnexo.style.display = 'block';
+       
             const menuToggle = document.getElementById('menuToggle'), mainNav = document.getElementById('mainNav');
             menuToggle.addEventListener('click', function() { mainNav.classList.toggle('active'); setTimeout(() => map.invalidateSize(), 300); });
             mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { mainNav.classList.remove('active'); setTimeout(() => map.invalidateSize(), 300); }));
