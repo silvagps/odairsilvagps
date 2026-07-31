@@ -567,13 +567,10 @@
                     <div class="form-group"><input type="email" name="fi-sender-email" placeholder="Seu e-mail" required></div>
                     <div class="form-group"><input type="tel" name="fi-text-phone" placeholder="WhatsApp com DDD"></div>
                     <div class="form-group"><textarea name="fi-text-message" placeholder="Descreva seu aparelho, região, raio..." required></textarea></div>
-                    <div class="form-group">                        
-    <label for="anexo" style="display:block; margin-bottom:0.3rem; color:#ccc;">📎 Anexar arquivo .zip</label>
-    <input type="file" id="anexo" name="fi-file-anexo" accept=".zip">
-    <p id="msgAnexo" style="color: #f39c12; font-size: 0.85rem; margin-top: 0.5rem; display: none;">
-        ⚠️ Anexe o arquivo .zip baixado antes de enviar.
-    </p>
-</div>
+                    <div class="form-group">
+                        <label for="anexo" style="display:block; margin-bottom:0.3rem; color:#ccc;">📎 Anexar arquivo .zip</label>
+                        <input type="file" id="anexo" name="fi-file-anexo" accept=".zip">
+                    </div>
                     <button type="submit">Enviar agora</button>
                 </form>
             </div>
@@ -806,24 +803,13 @@ ${tracksXml}
 
         // ---------- MAPA, MENU, GALERIA E PREÇOS ----------
         document.addEventListener('DOMContentLoaded', function() {
-            // Validação do anexo no formulário de contato
-const inputAnexo = document.getElementById('anexo');
-const btnSubmit = document.querySelector('#formContato button[type="submit"]');
-const msgAnexo = document.getElementById('msgAnexo');
+            const map = L.map('map').setView([-14.2350, -51.9253], 4);
+            const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap', maxZoom: 19 });
+            const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri', maxZoom: 19 });
+            const labelsLayer = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_only_labels/{z}/{x}/{y}.png', { attribution: 'Labels &copy; CartoDB', maxZoom: 19, opacity: 0.9 });
+            osmLayer.addTo(map);
+            let currentMode = 'osm';
 
-if (inputAnexo && btnSubmit && msgAnexo) {
-    // Inicia desabilitado e com aviso
-    btnSubmit.disabled = true;
-    msgAnexo.style.display = 'block';
-
-    inputAnexo.addEventListener('change', function() {
-        if (this.files && this.files.length > 0) {
-            btnSubmit.disabled = false;
-            msgAnexo.style.display = 'none';
-        } else {
-            btnSubmit.disabled = true;
-            msgAnexo.style.display = 'block';
-       
             const menuToggle = document.getElementById('menuToggle'), mainNav = document.getElementById('mainNav');
             menuToggle.addEventListener('click', function() { mainNav.classList.toggle('active'); setTimeout(() => map.invalidateSize(), 300); });
             mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { mainNav.classList.remove('active'); setTimeout(() => map.invalidateSize(), 300); }));
