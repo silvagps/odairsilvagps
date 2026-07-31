@@ -270,7 +270,8 @@
         .form-group input, .form-group textarea { width: 100%; padding: 0.9rem; border: 1px solid #555; background: #1e1e1a; border-radius: 6px; font-family: inherit; font-size: 1rem; color: white; }
         .form-group input[type="file"] { padding: 0.5rem; background: #2a2a22; color: #ccc; }
         button[type="submit"] { background: var(--accent); color: #1e1e1a; border: none; padding: 1rem 2rem; border-radius: 4px; font-weight: 700; cursor: pointer; width: 100%; text-transform: uppercase; font-family: 'Oswald', sans-serif; }
-        button[type="submit"]:hover { background: #a5621e; }
+        button[type="submit"]:disabled { background: #555; color: #999; cursor: not-allowed; }
+        button[type="submit"]:hover:enabled { background: #a5621e; }
 
         .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 8px 20px rgba(37,211,102,0.5); z-index: 999; transition: 0.3s; }
         .whatsapp-float:hover { transform: scale(1.1); }
@@ -562,7 +563,7 @@
                 </div>
                 <form class="contact-form" method="POST" enctype="multipart/form-data" action="https://forminit.com/f/4zh1jxvt4oo" id="formContato">
                     <input type="hidden" name="_gotcha" style="display:none !important">
-                    <input type="hidden" name="_redirect" value="pagamento.html">
+                    <input type="hidden" name="_redirect" value="pagamento.html" id="redirectField">
                     <div class="form-group"><input type="text" name="fi-sender-fullName" placeholder="Seu nome" required></div>
                     <div class="form-group"><input type="email" name="fi-sender-email" placeholder="Seu e-mail" required></div>
                     <div class="form-group"><input type="tel" name="fi-text-phone" placeholder="WhatsApp com DDD"></div>
@@ -570,8 +571,11 @@
                     <div class="form-group">
                         <label for="anexo" style="display:block; margin-bottom:0.3rem; color:#ccc;">📎 Anexar arquivo .zip</label>
                         <input type="file" id="anexo" name="fi-file-anexo" accept=".zip">
+                        <p id="msgAnexo" style="color: #f39c12; font-size: 0.85rem; margin-top: 0.5rem; display: none;">
+                            ⚠️ Anexe o arquivo .zip baixado antes de enviar.
+                        </p>
                     </div>
-                    <button type="submit">Enviar agora</button>
+                    <button type="submit" id="btnEnviar" disabled>Enviar agora</button>
                 </form>
             </div>
         </div>
@@ -803,6 +807,28 @@ ${tracksXml}
 
         // ---------- MAPA, MENU, GALERIA E PREÇOS ----------
         document.addEventListener('DOMContentLoaded', function() {
+            // --- CONTROLE DO BLOQUEIO DO FORMULÁRIO ---
+            const inputAnexo = document.getElementById('anexo');
+            const btnEnviar = document.getElementById('btnEnviar');
+            const msgAnexo = document.getElementById('msgAnexo');
+
+            if (inputAnexo && btnEnviar && msgAnexo) {
+                // Inicia com o botão desabilitado e a mensagem visível
+                btnEnviar.disabled = true;
+                msgAnexo.style.display = 'block';
+
+                inputAnexo.addEventListener('change', function() {
+                    if (this.files && this.files.length > 0) {
+                        btnEnviar.disabled = false;
+                        msgAnexo.style.display = 'none';
+                    } else {
+                        btnEnviar.disabled = true;
+                        msgAnexo.style.display = 'block';
+                    }
+                });
+            }
+
+            // --- DEMAIS FUNCIONALIDADES (MAPA, SIMULADOR, GALERIA) ---
             const map = L.map('map').setView([-14.2350, -51.9253], 4);
             const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap', maxZoom: 19 });
             const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { attribution: 'Tiles &copy; Esri', maxZoom: 19 });
