@@ -457,16 +457,21 @@
                     </div>
 
                     <div class="preco-info" id="precoInfo">
-                        <strong>💰 Tabela de preços por km:</strong><br>
-                        • 1-19 km → <strong>R$ 5,25</strong> por km<br>
-                        • 20-49 km → <strong>R$ 4,00</strong> por km<br>
-                        • 50-100 km → <strong>R$ 3,50</strong> por km<br>
-                        • 101-150 km → <strong>R$ 350,00</strong> (fixo)<br>
-                        • 151-200 km → <strong>R$ 400,00</strong> (fixo)<br>
-                        <span id="precoCalculado"></span>
-                        <div id="valorFinalDisplay" style="margin-top: 8px; font-weight: bold; color: var(--primary);"></div>
-                    </div>
-
+    <strong>💰 Tabela de preços por km:</strong><br>
+    • 1-19 km → <strong>R$ 5,25</strong> por km<br>
+    • 20-49 km → <strong>R$ 4,00</strong> por km<br>
+    • 50-100 km → <strong>R$ 3,50</strong> por km<br>
+    • 101-150 km → <strong>R$ 350,00</strong> (fixo)<br>
+    • 151-200 km → <strong>R$ 400,00</strong> (fixo)<br>
+    • 201-250 km → <strong>R$ 450,00</strong> (fixo)<br>
+    • 251-300 km → <strong>R$ 500,00</strong> (fixo)<br>
+    • 301-350 km → <strong>R$ 550,00</strong> (fixo)<br>
+    • 351-400 km → <strong>R$ 600,00</strong> (fixo)<br>
+    • 401-450 km → <strong>R$ 650,00</strong> (fixo)<br>
+    • 451-500 km → <strong>R$ 700,00</strong> (fixo)<br>
+    <span id="precoCalculado"></span>
+    <div id="valorFinalDisplay" style="margin-top: 8px; font-weight: bold; color: var(--primary);"></div>
+</div>
                     <div id="latLngFields">
                         <label for="lat">Latitude</label>
                         <input type="text" id="lat" placeholder="Automático ao buscar/clicar" readonly>
@@ -700,13 +705,19 @@ ${tracksXml}
         }
 
         function calcularValorPorRaio(raioKm) {
-            if (raioKm >= 1 && raioKm <= 19) return raioKm * 5.25;
-            if (raioKm >= 20 && raioKm <= 49) return raioKm * 4.00;
-            if (raioKm >= 50 && raioKm <= 100) return raioKm * 3.50;
-            if (raioKm >= 101 && raioKm <= 150) return 350;
-            if (raioKm >= 151 && raioKm <= 200) return 400;
-            return null;
-        }
+    if (raioKm >= 1 && raioKm <= 19) return raioKm * 5.25;
+    if (raioKm >= 20 && raioKm <= 49) return raioKm * 4.00;
+    if (raioKm >= 50 && raioKm <= 100) return raioKm * 3.50;
+    if (raioKm >= 101 && raioKm <= 150) return 350;
+    if (raioKm >= 151 && raioKm <= 200) return 400;
+    if (raioKm >= 201 && raioKm <= 250) return 450;
+    if (raioKm >= 251 && raioKm <= 300) return 500;
+    if (raioKm >= 301 && raioKm <= 350) return 550;
+    if (raioKm >= 351 && raioKm <= 400) return 600;
+    if (raioKm >= 401 && raioKm <= 450) return 650;
+    if (raioKm >= 451 && raioKm <= 500) return 700;
+    return null;
+}
 
         function crc16CCITT(data) {
             let crc = 0xFFFF;
